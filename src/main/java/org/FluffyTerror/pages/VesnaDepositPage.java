@@ -6,10 +6,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class VesnaDepositPage extends BasePage {
 
-    @FindBy(xpath = "//h1[@class='chakra-text css-1o3gv6l']")
+    @FindBy(css = "h1.chakra-text.css-1o3gv6l")
     private WebElement Vesna;
 
-    @FindBy(xpath = "//h1[@class='css-uyawat']")
+    @FindBy(css = "h1.css-uyawat")
     private WebElement Deposit;
 
     public VesnaDepositPage checkOpenVesnaPage(){

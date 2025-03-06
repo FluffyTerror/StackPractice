@@ -6,14 +6,15 @@ import org.openqa.selenium.support.FindBy;
 
 public class CardsPage extends BasePage {
 
-    @FindBy(xpath = "//*[@id=\"app-wrapper\"]/main/div/div[2]/div/h1")
+    @FindBy(css = "div.css-1eu0o0x")
     private WebElement cardTitle;
 
-    @FindBy(xpath = "//a[@href=\"/retail/cards/debit/mcworld\"]")
+    @FindBy(css = "div.css-ebyn5d h2.css-il275z a[href='/retail/cards/debit/mcworld']")//не уверен, что стоило трогать...
     private WebElement aboutYarkaya;
 
     public CardsPage checkOpenCardsPage() {
         waitUtilElementToBeVisible(cardTitle);
+        sleep(1000);//ноут тупил, так что сделал так чтобы успела страница загрузиться
         Assertions.assertEquals("Дебетовые карты", cardTitle.getText(),
                 "Заголовок отсутствует/не соответствует требуемому");
         return this;

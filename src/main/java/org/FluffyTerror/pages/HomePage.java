@@ -20,7 +20,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//button[@id='popover-trigger-:R6kqdt9jltmH1:']")
     private WebElement deposits;
 
-    @FindBy(xpath = "//*[@id=\"popover-content-:R6kqdt9jltmH1:\"]/div/div/div[1]/div")
+    @FindBy(css = "div.css-ymrs81 div.css-1cz2lgq a[href='/retail/deposits']")
     private List<WebElement> depositSubMenu;
 
     @FindBy(xpath = "//*[@id=\"28\"]/div/div/div[1]/div[1]/div[1]/input")
@@ -32,7 +32,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[@id=\"28\"]/div/div/div[1]/div[3]/div[1]/input")
     private WebElement initialSum;
 
-    @FindBy(xpath = "//*[@id=\"2922\"]/div/div/div/div/h3/a/span[1]")
+    @FindBy(css = "a.chakra-link.css-vg2g2m a[href='/career']")
     private WebElement career;
 
 
@@ -93,10 +93,7 @@ public class HomePage extends BasePage {
     }
 
 
-    public HomePage scrollToInitialSum() {
-        //Скролл до найденного элемента
-        return scrollToElement(initialSum);
-    }
+
 
     private HomePage scrollToElement(WebElement initialSum) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -133,5 +130,9 @@ public class HomePage extends BasePage {
         return scrollToElement(career);
     }
 
+    public HomePage scrollToInitialSum() {
+        //Скролл до найденного элемента
+        return scrollToElement(initialSum);
+    }
 
 }

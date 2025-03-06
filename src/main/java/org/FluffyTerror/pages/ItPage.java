@@ -5,10 +5,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class ItPage extends BasePage {
-    @FindBy(xpath = "//h1[@class='chakra-text css-1o3gv6l']")
+    @FindBy(css = "h1.chakra-text.css-1o3gv6l")
     private WebElement expertise;
 
-    @FindBy(xpath = "//h1[@class='css-uyawat']")
+    @FindBy(css = "h1.css-uyawat")
     private WebElement finTech;
 
     public ItPage checkOpenItPage() {

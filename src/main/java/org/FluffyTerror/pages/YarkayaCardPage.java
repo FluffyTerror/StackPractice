@@ -8,16 +8,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class YarkayaCardPage extends BasePage {
-    @FindBy(xpath = "//h1[@class=\"css-uyawat\"]")
+    @FindBy(css = "h1.css-uyawat")
     private WebElement yarkayaTitle;
 
-    @FindBy(xpath = "//input[@name=\"lastName\"]")
+    @FindBy(css = "input[name=\"lastName\"]")
     private WebElement lastName;
 
-    @FindBy(xpath = "//input[@name=\"firstName\"]")
+    @FindBy(css = "input[name=\"firstName\"]")
     private WebElement firstName;
 
-    @FindBy(xpath = "//input[@name=\"patronym\"]")
+    @FindBy(css = "input[name=\"patronym\"]")
     private WebElement patronym;
 
     WebDriver driver = driverManager.getDriver();
@@ -32,10 +32,9 @@ public class YarkayaCardPage extends BasePage {
 
 
     public YarkayaCardPage scrollToElement() {
-        WebElement targetElement = driver.findElement(By.id("lastName"));
         //Скролл до найденного элемента
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", targetElement);
+        js.executeScript("arguments[0].scrollIntoView(true);", lastName);
         sleep(2000);
         return this;
     }

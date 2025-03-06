@@ -7,10 +7,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class DepositPage extends BasePage {
 
-    @FindBy(xpath = "//*[@id=\"app-wrapper\"]/main/div/div[2]/div/h1")
+    @FindBy(css = "div.css-1eu0o0x")
     private WebElement depositTitle;
 
-    @FindBy(xpath = "//div[@class =\"css-1jk9zdi\"]")
+    @FindBy(xpath = "//h2[contains(@class, 'css-il275z') and contains(text(), 'Весна')]")
     private WebElement AboutVesna;
 
     /**
@@ -21,6 +21,7 @@ public class DepositPage extends BasePage {
 
     public DepositPage checkOpenDepositPage() {
         waitUtilElementToBeVisible(depositTitle);
+        sleep(1000);//ноут тупил
         Assertions.assertEquals("Вклады и накопительные счета", depositTitle.getText(),
                 "Заголовок отсутствует/не соответствует требуемому");
         return this;

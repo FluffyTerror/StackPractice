@@ -8,16 +8,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CareerPage extends BasePage {
-    @FindBy(xpath = "//a[@href='/career/it'][./div]")
+    @FindBy(css = "a.chakra-link.css-vg2g2m a[href='/career/it']")
     private WebElement itCareer;
 
-    @FindBy(xpath = "//h1[contains(@class,'chakra-text')][contains(@class, 'css-1o3gv6l')]")
+    @FindBy(css = "h1.chakra-text.css-1o3gv6l")
     private WebElement career;
 
     @FindBy(css = "h1.css-uyawat")
     private WebElement bank;
 
-    @FindBy(xpath = "//*[@id=\"1231\"]/div/div")
+    @FindBy(css = "div.css-np8lw6 a[href='/career/it']")
     private WebElement it;
 
     WebDriver driver = driverManager.getDriver();
@@ -31,10 +31,9 @@ public class CareerPage extends BasePage {
     }
 
     public CareerPage scrollToIt() {
-        WebElement targetElement = driver.findElement(By.xpath("//*[@id=\"1231\"]/div/div"));
         //Скролл до найденного элемента
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", targetElement);
+        js.executeScript("arguments[0].scrollIntoView(true);", itCareer);
         sleep(2000);
         return this;
     }

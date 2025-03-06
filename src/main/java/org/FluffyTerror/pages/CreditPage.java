@@ -9,10 +9,10 @@ import org.openqa.selenium.support.FindBy;
 
 public class CreditPage extends BasePage {
 
-    @FindBy(xpath = "//h1[@class='chakra-text css-1o3gv6l']")
+    @FindBy(css = "h1.chakra-text.css-1o3gv6l")
     private WebElement credit;
 
-    @FindBy(xpath = "//h1[@class='css-uyawat']")
+    @FindBy(css = "h1.css-uyawat")
     private WebElement consumer;
 
     @FindBy(xpath = "//*[@id=\"app-wrapper\"]/main/div/div[5]/div/div/div[1]/div[1]/div[1]/input")
