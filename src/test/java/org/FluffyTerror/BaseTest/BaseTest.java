@@ -20,6 +20,7 @@ public class BaseTest {
     public static void beforeAll(){
         InitManager.initFramework();
     }
+    
     //под вопросом
     @BeforeEach
     public void beforeEach(){

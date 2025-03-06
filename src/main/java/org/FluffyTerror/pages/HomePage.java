@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class HomePage extends BasePage {
@@ -92,12 +93,22 @@ public class HomePage extends BasePage {
     }
 
 
-    public HomePage scrollToElement() {
-        WebElement targetElement = driver.findElement(By.xpath("//*[@id=\"28\"]/div/div/div[1]/div[1]/div[1]/input"));
+    public HomePage scrollToInitialSum() {
         //Скролл до найденного элемента
+        return scrollToElement(initialSum);
+    }
+
+    private HomePage scrollToElement(WebElement initialSum) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", targetElement);
+        js.executeScript("arguments[0].scrollIntoView(true);", initialSum);
         sleep(2000);
+        return this;
+    }
+
+    public HomePage scrollToElement(String fieldName) throws NoSuchFieldException, IllegalAccessException {
+        Field field = this.getClass().getField(fieldName);
+        WebElement element = (WebElement) field.get(this);
+        scrollToElement(element);
         return this;
     }
 
@@ -118,12 +129,8 @@ public class HomePage extends BasePage {
     }
 
     public HomePage scrollToCareer() {
-        WebElement targetElement = driver.findElement(By.xpath("//*[@id=\"2922\"]/div/div/div/div/h3/a/span[1]"));
         //Скролл до найденного элемента
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", targetElement);
-        sleep(2000);
-        return this;
+        return scrollToElement(career);
     }
 
 

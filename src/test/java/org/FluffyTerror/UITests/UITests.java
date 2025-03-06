@@ -16,8 +16,7 @@ public class UITests extends BaseTest {
                 .checkOpenCareerPage()
                 .scrollToIt()
                 .selectItPage()
-                .checkOpenItPage()
-        ;
+                .checkOpenItPage();
 
     }
 
@@ -63,6 +62,7 @@ public class UITests extends BaseTest {
                 .fillDuration(36)
                 .bankSalary()//убираем галочку с зп
                 .bankPension()//ставим в пенсию
+        //assert
         ;
     }
 
@@ -71,7 +71,7 @@ public class UITests extends BaseTest {
     @Tag("UI")
     public void testMortgage() {
         app.getHomePage()
-                .scrollToElement()
+                .scrollToInitialSum()
                 .fillSum(9000000)
                 .fillDuration(120)
                 .fillInitialSum(4000000);

@@ -39,10 +39,9 @@ public class CreditPage extends BasePage {
 
 
     public CreditPage scrollToElement() {
-        WebElement targetElement = driver.findElement(By.xpath("//*[@id=\"app-wrapper\"]/main/div/div[5]/div/div/div[1]/div[1]/div[1]/input"));
         //Скролл до найденного элемента
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", targetElement);
+        js.executeScript("arguments[0].scrollIntoView(true);", creditSum);
         sleep(2000);
         return this;
     }

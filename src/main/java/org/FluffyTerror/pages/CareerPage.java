@@ -8,13 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CareerPage extends BasePage {
-    @FindBy(xpath = "//*[@id=\"1231\"]/div/div/div/div/h3")
+    @FindBy(xpath = "//a[@href='/career/it'][./div]")
     private WebElement itCareer;
 
-    @FindBy(xpath = "//h1[@class='chakra-text css-1o3gv6l']")
+    @FindBy(xpath = "//h1[contains(@class,'chakra-text')][contains(@class, 'css-1o3gv6l')]")
     private WebElement career;
 
-    @FindBy(xpath = "//h1[@class='css-uyawat']")
+    @FindBy(css = "h1.css-uyawat")
     private WebElement bank;
 
     @FindBy(xpath = "//*[@id=\"1231\"]/div/div")
