@@ -15,17 +15,20 @@ public class CreditPage extends BasePage {
     @FindBy(css = "h1.css-uyawat")
     private WebElement consumer;
 
-    @FindBy(xpath = "//*[@id=\"app-wrapper\"]/main/div/div[5]/div/div/div[1]/div[1]/div[1]/input")
+    @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Сумма кредита')]/following-sibling::input[@type='text'] ")//
     private WebElement creditSum;
 
-    @FindBy(xpath = "//*[@id=\"app-wrapper\"]/main/div/div[5]/div/div/div[1]/div[2]/div[1]/input")
+    @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Срок кредита')]/following-sibling::input[@type='text']")
     private WebElement creditDuration;
 
-    @FindBy(xpath = "//*[@id=\"app-wrapper\"]/main/div/div[5]/div/div/div[1]/div[3]/label[2]/span[1]")
+    @FindBy(xpath = "//span[contains(text(), 'Получаю зарплату в Банке Санкт-Петербург')]")
     private WebElement bankSalaryCheckbox;
 
-    @FindBy(xpath = "//*[@id=\"app-wrapper\"]/main/div/div[5]/div/div/div[1]/div[3]/label[1]/span[1]")
+    @FindBy(xpath = "//span[contains(text(), 'Получаю пенсию в Банке Санкт-Петербург')]")
     private WebElement bankPensionCheckbox;
+
+    @FindBy(css = "h2.css-1bw6t7s")
+    private WebElement monthlyPayment;
 
     WebDriver driver = driverManager.getDriver();
 
@@ -38,7 +41,7 @@ public class CreditPage extends BasePage {
     }
 
 
-    public CreditPage scrollToElement() {
+    public CreditPage scrollToCreditCalc() {
         //Скролл до найденного элемента
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", creditSum);
@@ -56,9 +59,11 @@ public class CreditPage extends BasePage {
             duration = 13;
         }
         fillIntInputField(creditDuration, duration);
+        sleep(2000);
         return this;
 
     }
+
     /**
      * Ставит чекбокс "получаю зп в банке" в состояние активен
      */
@@ -71,7 +76,12 @@ public class CreditPage extends BasePage {
         waitUtilElementToBeVisible(bankPensionCheckbox).click();
         sleep(2000);
         return this;
+    }
 
+    public CreditPage checkCreditCalc(String sum){
+        String value = monthlyPayment.getText();
+        Assertions.assertEquals(sum + " ₽",value,"Сумма кредита не соответствует ожидаемому!");
+        return this;
     }
 
 }

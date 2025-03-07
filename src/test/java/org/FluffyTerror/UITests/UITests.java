@@ -33,13 +33,10 @@ public class UITests extends BaseTest {
     }
 
     @Test
-    @DisplayName("Дебетовые карты")
+    @DisplayName("Проверка открытия страницы карты Яркая")
     @Tag("UI")
     public void testCards() {
-        app.getHomePage()
-                .selectBaseMenu("Карты")
-                .selectCardsSubMenu("Дебетовые карты")
-                .checkOpenCardsPage()
+        app.getCardsPage()
                 .selectyarkayaCardPage()
                 .checkOpenYarkayaPage()
                 .scrollToElement()
@@ -49,32 +46,70 @@ public class UITests extends BaseTest {
         ;
     }
 
+
+
     @Test
-    @DisplayName("Калькулятор кредита")
+    @DisplayName("Открытие страницы дебетовых карт")
     @Tag("UI")
-    public void testCredit() {
+    public void testCardsPage(){
+        app.getHomePage()
+                .selectBaseMenu("Карты")
+                .selectCardsSubMenu("Дебетовые карты")
+                .checkOpenCardsPage();
+    }
+
+
+    @Test
+    @DisplayName("Открытие страницы кредита")
+    @Tag("UI")
+    @Tag("Credit Page")
+    public void testCreditPage() {
         app.getHomePage()
                 .selectBaseMenu("Кредит")
                 .selectCreditSubMenu("Кредит наличными")
                 .checkOpenCreditPage()
-                .scrollToElement()
-                .fillSum(1500000)
-                .fillDuration(36)
-                .bankSalary()//убираем галочку с зп
-                .bankPension()//ставим в пенсию
-        //assert
         ;
     }
+
+    @Test
+    @DisplayName("Калькулятор кредита")
+    @Tag("UI")
+    @Tag("Credit Page")
+    public void testCreditCalc(){
+        app.getCreditPage()
+                .scrollToCreditCalc()
+                .fillSum(1000000)
+                .fillDuration(13)
+                .checkCreditCalc("98 129");
+    }
+
+    @Test
+    @DisplayName("Проверка чекбоксов для калькулятора кредита")
+    @Tag("UI")
+    @Tag("Credit Page")
+    public void testCheckbox(){
+        app.getCreditPage()
+                .scrollToCreditCalc()
+                .fillSum(1000000)
+                .fillDuration(13)
+                .bankSalary()
+                .bankPension()
+                .checkCreditCalc("95 726");
+    }
+
+
 
     @Test
     @DisplayName("Калькулятор ипотеки")
     @Tag("UI")
     public void testMortgage() {
         app.getHomePage()
-                .scrollToInitialSum()
+                .scrollToMortage()
                 .fillSum(9000000)
                 .fillDuration(120)
-                .fillInitialSum(4000000);
+                .fillInitialSum(4000000)
+                .checkMortrageValue("44 408");
+
     }
 
 

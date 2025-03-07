@@ -3,6 +3,9 @@ package org.FluffyTerror.managers;
 import org.FluffyTerror.pages.*;
 import org.openqa.selenium.interactions.Actions;
 
+import static org.FluffyTerror.utils.Const.BASE_CARDS_PAGE;
+import static org.FluffyTerror.utils.Const.BASE_CREDIT_PAGE;
+
 public class PageManager {
     /**
      * Менеджер страничек
@@ -50,6 +53,7 @@ public class PageManager {
     }
 
     public CreditPage getCreditPage() {
+        driverManager.getDriver().get(PropsManager.getPropsManager().getProperty(BASE_CREDIT_PAGE));
         if (creditPage == null) {
             creditPage = new CreditPage();
         }
@@ -64,6 +68,7 @@ public class PageManager {
     }
 
     public CardsPage getCardsPage() {
+        driverManager.getDriver().get(PropsManager.getPropsManager().getProperty(BASE_CARDS_PAGE));
         if (cardsPage == null) {
             cardsPage = new CardsPage();
         }

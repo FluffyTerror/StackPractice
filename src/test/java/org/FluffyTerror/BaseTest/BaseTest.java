@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import static org.FluffyTerror.utils.Const.BASE_CREDIT_PAGE;
 import static org.FluffyTerror.utils.Const.BASE_URL;
 
 public class BaseTest {
@@ -16,19 +17,24 @@ public class BaseTest {
     private final DriverManager driverManager = DriverManager.getDriverManager();
 
 
+
+
     @BeforeAll
     public static void beforeAll(){
         InitManager.initFramework();
     }
-    
+
     //под вопросом
     @BeforeEach
     public void beforeEach(){
         driverManager.getDriver().get(PropsManager.getPropsManager().getProperty(BASE_URL));
+
     }
 
     @AfterAll
     public static void afterAll() {
         InitManager.quitFramework();
     }
+
+
 }

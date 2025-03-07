@@ -1,5 +1,6 @@
 package org.FluffyTerror.pages;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,26 +15,32 @@ public class HomePage extends BasePage {
 //*[@id="popover-trigger-:R6kqdt9jltmH1:"]/p
 //button[@id='popover-trigger-:R6kqdt9jltmH1:']
 
-    @FindBy(xpath = "//nav[@class='css-lmwlkq']")
+    @FindBy(css = "nav.css-lmwlkq")
     private List<WebElement> listBaseMenu;
 
-    @FindBy(xpath = "//button[@id='popover-trigger-:R6kqdt9jltmH1:']")
+    @FindBy(xpath = "//p[contains(text(), 'Вклады')]")
     private WebElement deposits;
 
     @FindBy(css = "div.css-ymrs81 div.css-1cz2lgq a[href='/retail/deposits']")
     private List<WebElement> depositSubMenu;
 
-    @FindBy(xpath = "//*[@id=\"28\"]/div/div/div[1]/div[1]/div[1]/input")
-    private WebElement estateValue;
+    @FindBy(xpath = "//div[@role='tablist']//button[contains (text(), 'Ипотека')]")
+    private WebElement mortrage;
 
-    @FindBy(xpath = "//*[@id=\"28\"]/div/div/div[1]/div[2]/div[1]/input")
-    private WebElement durationn;
+    @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Стоимость недвижимости')]/following-sibling::input[@type='text']")
+    private WebElement inputEstateValue;
 
-    @FindBy(xpath = "//*[@id=\"28\"]/div/div/div[1]/div[3]/div[1]/input")
-    private WebElement initialSum;
+    @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Срок')]/following-sibling::input[@type='text']")
+    private WebElement inputDurationValue;
+
+    @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Первоначальный взнос')]/following-sibling::input[@type='text']")
+    private WebElement inputInitialSumValue;
 
     @FindBy(css = "a.chakra-link.css-vg2g2m a[href='/career']")
     private WebElement career;
+
+    @FindBy(xpath = "//div[@class='css-1ac3fhy']//p[contains(text(), 'Ежемесячный платеж')]/following-sibling::h2[@class='css-1bw6t7s']")
+    private WebElement mortrageValue;
 
 
     WebDriver driver = driverManager.getDriver();
@@ -110,17 +117,17 @@ public class HomePage extends BasePage {
     }
 
     public HomePage fillSum(Integer sum) {
-        fillIntInputField(estateValue, sum);
+        fillIntInputField(inputEstateValue, sum);
         return this;
     }
 
     public HomePage fillDuration(Integer duration) {
-        fillIntInputField(durationn, duration);
+        fillIntInputField(inputDurationValue, duration);
         return this;
     }
 
     public HomePage fillInitialSum(Integer sum) {
-        fillIntInputField(initialSum, sum);
+        fillIntInputField(inputInitialSumValue, sum);
         sleep(2000);
         return this;
     }
@@ -130,9 +137,22 @@ public class HomePage extends BasePage {
         return scrollToElement(career);
     }
 
+    public HomePage scrollToMortage(){
+        sleep(1000);
+        scrollToElement(mortrage);
+        waitUtilElementToBeClickable(mortrage).click();
+        return this;
+    }
+
     public HomePage scrollToInitialSum() {
         //Скролл до найденного элемента
-        return scrollToElement(initialSum);
+        return scrollToElement(inputInitialSumValue);
+    }
+
+    public HomePage checkMortrageValue(String sum){
+        String value = mortrageValue.getText();
+        Assertions.assertEquals(sum + " ₽",value,"Сумма кредита не соответствует ожидаемому!");
+        return this;
     }
 
 }
