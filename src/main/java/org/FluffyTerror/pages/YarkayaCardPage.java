@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class YarkayaCardPage extends BasePage {
     @FindBy(css = "h1.css-uyawat")
     private WebElement yarkayaTitle;
@@ -25,8 +27,9 @@ public class YarkayaCardPage extends BasePage {
     public YarkayaCardPage checkOpenYarkayaPage() {
         sleep(1000);
         String title = yarkayaTitle.getText();
-        Assertions.assertEquals("Карта «Яркая»", title,
-                "Заголовок отсутствует/не соответствует требуемому");
+        assertThat(title)
+                .as("Заголовок отсутствует/не соответствует требуемому")
+                .isEqualTo("Карта «Яркая»");
         return this;
     }
 

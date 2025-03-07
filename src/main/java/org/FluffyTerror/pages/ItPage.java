@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class ItPage extends BasePage {
     @FindBy(css = "h1.chakra-text.css-1o3gv6l")
     private WebElement expertise;
@@ -14,8 +16,8 @@ public class ItPage extends BasePage {
     public ItPage checkOpenItPage() {
         sleep(1000);
         String title = finTech.getText() + ' ' + expertise.getText();
-        Assertions.assertEquals("Развивайте финтех, прокачивайте экспертизу", title,
-                "Заголовок отсутствует/не соответствует требуемому");
+        assertThat(title).as("Заголовок отсутствует/не соответствует требуемому")
+                .isEqualTo("Развивайте финтех, прокачивайте экспертизу");
         return this;
     }
 }

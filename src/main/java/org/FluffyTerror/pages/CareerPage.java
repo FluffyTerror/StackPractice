@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class CareerPage extends BasePage {
     @FindBy(css = "a.chakra-link.css-vg2g2m a[href='/career/it']")
     private WebElement itCareer;
@@ -25,8 +27,10 @@ public class CareerPage extends BasePage {
     public CareerPage checkOpenCareerPage() {
         sleep(1000);
         String title = bank.getText() + ' ' + career.getText();
-        Assertions.assertEquals("Твой банк. Твоя карьера.", title,
-                "Заголовок отсутствует/не соответствует требуемому");
+        assertThat(title)
+                .as("Заголовок отсутствует/не соответствует требуемому")
+                .isEqualTo("Твой банк. Твоя карьера.");
+
         return this;
     }
 

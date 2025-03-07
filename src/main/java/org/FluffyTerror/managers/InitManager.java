@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import static org.FluffyTerror.utils.Const.IMPLICITLY_WAIT;
 import static org.FluffyTerror.utils.Const.PAGE_LOAD_TIMEOUT;
 
-public class InitManager{
+public class InitManager {
     /**
      * Менеджер properties
      *

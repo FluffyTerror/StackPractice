@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -100,8 +102,6 @@ public class HomePage extends BasePage {
     }
 
 
-
-
     private HomePage scrollToElement(WebElement initialSum) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", initialSum);
@@ -137,7 +137,7 @@ public class HomePage extends BasePage {
         return scrollToElement(career);
     }
 
-    public HomePage scrollToMortage(){
+    public HomePage scrollToMortage() {
         sleep(1000);
         scrollToElement(mortrage);
         waitUtilElementToBeClickable(mortrage).click();
@@ -149,9 +149,12 @@ public class HomePage extends BasePage {
         return scrollToElement(inputInitialSumValue);
     }
 
-    public HomePage checkMortrageValue(String sum){
+    public HomePage checkMortrageValue(String sum) {
         String value = mortrageValue.getText();
-        Assertions.assertEquals(sum + " ₽",value,"Сумма кредита не соответствует ожидаемому!");
+
+        assertThat(value)
+                .as("Сумма кредита не соответствует ожидаемому!")
+                .isEqualTo(sum + " ₽");
         return this;
     }
 

@@ -17,18 +17,15 @@ public class BaseTest {
     private final DriverManager driverManager = DriverManager.getDriverManager();
 
 
-
-
     @BeforeAll
-    public static void beforeAll(){
+    public static void beforeAll() {
         InitManager.initFramework();
     }
 
     //под вопросом
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         driverManager.getDriver().get(PropsManager.getPropsManager().getProperty(BASE_URL));
-
     }
 
     @AfterAll

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class CreditPage extends BasePage {
 
     @FindBy(css = "h1.chakra-text.css-1o3gv6l")
@@ -15,7 +17,8 @@ public class CreditPage extends BasePage {
     @FindBy(css = "h1.css-uyawat")
     private WebElement consumer;
 
-    @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Сумма кредита')]/following-sibling::input[@type='text'] ")//
+    @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Сумма кредита')]/following-sibling::input[@type='text'] ")
+//
     private WebElement creditSum;
 
     @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Срок кредита')]/following-sibling::input[@type='text']")
@@ -35,8 +38,10 @@ public class CreditPage extends BasePage {
     public CreditPage checkOpenCreditPage() {
         sleep(1000);
         String title = consumer.getText() + ' ' + credit.getText();
-        Assertions.assertEquals("Потребительский кредит", title,
-                "Заголовок отсутствует/не соответствует требуемому");
+        assertThat(title)
+                .as("Заголовок отсутствует/не соответствует требуемому")
+                .isEqualTo("Потребительский кредит");
+
         return this;
     }
 
@@ -67,20 +72,22 @@ public class CreditPage extends BasePage {
     /**
      * Ставит чекбокс "получаю зп в банке" в состояние активен
      */
-    public CreditPage bankSalary(){
+    public CreditPage bankSalary() {
         waitUtilElementToBeVisible(bankSalaryCheckbox).click();
         return this;
     }
 
-    public CreditPage bankPension(){
+    public CreditPage bankPension() {
         waitUtilElementToBeVisible(bankPensionCheckbox).click();
         sleep(2000);
         return this;
     }
 
-    public CreditPage checkCreditCalc(String sum){
+    public CreditPage checkCreditCalc(String sum) {
         String value = monthlyPayment.getText();
-        Assertions.assertEquals(sum + " ₽",value,"Сумма кредита не соответствует ожидаемому!");
+        assertThat(value)
+                .as("Сумма кредита не соответствует ожидаемому!")
+                .isEqualTo(sum + " ₽");
         return this;
     }
 

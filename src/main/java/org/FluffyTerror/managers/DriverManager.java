@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.junit.jupiter.api.Assertions;
+
 import static org.FluffyTerror.utils.Const.*;
 
 
@@ -22,7 +23,9 @@ public class DriverManager {
      */
     private static DriverManager INSTANCE = null;
 
-    /** Получаем объект типа PropsManager*/
+    /**
+     * Получаем объект типа PropsManager
+     */
     private final PropsManager props = PropsManager.getPropsManager();
 
     /**

@@ -90,10 +90,10 @@ public class BasePage {
         element.sendKeys(String.valueOf(value));
     }
 
-    public void sleep(long sec){
+    public void sleep(long sec) {
         try {
             Thread.sleep(sec);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class DepositPage extends BasePage {
 
     @FindBy(css = "div.css-1eu0o0x")
@@ -22,12 +24,13 @@ public class DepositPage extends BasePage {
     public DepositPage checkOpenDepositPage() {
         waitUtilElementToBeVisible(depositTitle);
         sleep(1000);//ноут тупил
-        Assertions.assertEquals("Вклады и накопительные счета", depositTitle.getText(),
-                "Заголовок отсутствует/не соответствует требуемому");
+        assertThat(depositTitle.getText())
+                .as("Заголовок отсутствует/не соответствует требуемому")
+                .isEqualTo("Вклады и накопительные счета");
         return this;
     }
 
-    public VesnaDepositPage selectVesnaDepositPage(){
+    public VesnaDepositPage selectVesnaDepositPage() {
         waitUtilElementToBeClickable(AboutVesna).click();
         return pageManager.getVesnaDepositPage();
     }

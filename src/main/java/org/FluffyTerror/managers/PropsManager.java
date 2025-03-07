@@ -46,11 +46,9 @@ public class PropsManager {
 
     /**
      * Метод подгружает содержимого файла application.properties в переменную {@link #properties}
-     *
-     *
+     * <p>
+     * <p>
      * Либо из файла переданного пользователем через настройку -DpropFile={nameFile}
-     *
-
      */
     private void loadApplicationProperties() {
         try {

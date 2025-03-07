@@ -47,11 +47,10 @@ public class UITests extends BaseTest {
     }
 
 
-
     @Test
     @DisplayName("Открытие страницы дебетовых карт")
     @Tag("UI")
-    public void testCardsPage(){
+    public void testCardsPage() {
         app.getHomePage()
                 .selectBaseMenu("Карты")
                 .selectCardsSubMenu("Дебетовые карты")
@@ -75,7 +74,7 @@ public class UITests extends BaseTest {
     @DisplayName("Калькулятор кредита")
     @Tag("UI")
     @Tag("Credit Page")
-    public void testCreditCalc(){
+    public void testCreditCalc() {
         app.getCreditPage()
                 .scrollToCreditCalc()
                 .fillSum(1000000)
@@ -87,7 +86,7 @@ public class UITests extends BaseTest {
     @DisplayName("Проверка чекбоксов для калькулятора кредита")
     @Tag("UI")
     @Tag("Credit Page")
-    public void testCheckbox(){
+    public void testCheckbox() {
         app.getCreditPage()
                 .scrollToCreditCalc()
                 .fillSum(1000000)
@@ -96,7 +95,6 @@ public class UITests extends BaseTest {
                 .bankPension()
                 .checkCreditCalc("95 726");
     }
-
 
 
     @Test
