@@ -1,8 +1,5 @@
 package org.FluffyTerror.pages;
 
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,11 +32,7 @@ public class CareerPage extends BasePage {
     }
 
     public CareerPage scrollToIt() {
-        //Скролл до найденного элемента
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", itCareer);
-        sleep(2000);
-        return this;
+        return (CareerPage) scrollToElement(itCareer);
     }
 
     public ItPage selectItPage() {

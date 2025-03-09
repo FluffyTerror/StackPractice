@@ -1,8 +1,5 @@
 package org.FluffyTerror.pages;
 
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,26 +32,29 @@ public class YarkayaCardPage extends BasePage {
 
 
     public YarkayaCardPage scrollToElement() {
-        //Скролл до найденного элемента
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", lastName);
-        sleep(2000);
-        return this;
+        return (YarkayaCardPage) scrollToElement(lastName);
     }
 
     /**
-     * Заполняет поле имени
+     * Заполняет поле фамилии
      */
     public YarkayaCardPage fillLastName(String name) {
         fillInputField(lastName, name);
         return this;
     }
 
+    /**
+     * Заполняет поле имени
+     */
+
     public YarkayaCardPage fillName(String name) {
         fillInputField(firstName, name);
         return this;
     }
 
+    /**
+     * Заполняет поле отчества
+     */
     public YarkayaCardPage fillPatronym(String name) {
         fillInputField(patronym, name);
         sleep(2000);//чисто для того чтобы посмотрели как все заполнено

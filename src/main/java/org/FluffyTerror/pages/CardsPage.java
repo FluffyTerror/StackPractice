@@ -1,6 +1,5 @@
 package org.FluffyTerror.pages;
 
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -17,7 +16,7 @@ public class CardsPage extends BasePage {
 
     public CardsPage checkOpenCardsPage() {
         waitUtilElementToBeVisible(cardTitle);
-        sleep(1000);//ноут тупил, так что сделал так чтобы успела страница загрузиться
+        sleep(1000);//ноут тупил, так что сделал так, чтобы успела страница загрузиться
         assertThat(cardTitle.getText())
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Дебетовые карты");

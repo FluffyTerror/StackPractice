@@ -3,6 +3,7 @@ package org.FluffyTerror.pages;
 import org.FluffyTerror.managers.DriverManager;
 import org.FluffyTerror.managers.PageManager;
 import org.FluffyTerror.managers.PropsManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -72,7 +73,7 @@ public class BasePage {
 
 
     /**
-     * Общий метод по заполнения полей ввода
+     * Общий метод для заполнения строковых значений для полей ввода
      *
      * @param field - веб-элемент поле ввода
      * @param value - значение вводимое в поле
@@ -83,12 +84,24 @@ public class BasePage {
         field.sendKeys(value);
     }
 
+    /**
+     * Общий метод для заполнения числовых значений для полей ввода
+     *
+     * @param field - веб-элемент поле ввода
+     * @param value - значение вводимое в поле
+     */
     protected void fillIntInputField(WebElement field, Integer value) {
         WebElement element = waitUtilElementToBeClickable(field);
         element.click();
         element.clear();
         element.sendKeys(String.valueOf(value));
     }
+
+    /**
+     * Функция для ожидания
+     *
+     * @param sec
+     */
 
     public void sleep(long sec) {
         try {
@@ -97,4 +110,19 @@ public class BasePage {
             System.out.println(e);
         }
     }
+
+    /**
+     * Прокручивает страницу до указанного элемента и ждёт его видимости.
+     *
+     * @param element целевой элемент
+     * @return текущий экземпляр BasePage для цепочки вызовов
+     */
+    protected BasePage scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+        sleep(2000);
+        return this;
+    }
+
+
 }

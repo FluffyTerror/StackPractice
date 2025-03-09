@@ -8,7 +8,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
-import static org.FluffyTerror.utils.Const.BASE_CREDIT_PAGE;
 import static org.FluffyTerror.utils.Const.BASE_URL;
 
 public class BaseTest {

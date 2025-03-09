@@ -1,8 +1,5 @@
 package org.FluffyTerror.pages;
 
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,11 +44,7 @@ public class CreditPage extends BasePage {
 
 
     public CreditPage scrollToCreditCalc() {
-        //Скролл до найденного элемента
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", creditSum);
-        sleep(2000);
-        return this;
+        return (CreditPage) scrollToElement(creditSum);
     }
 
     public CreditPage fillSum(Integer sum) {

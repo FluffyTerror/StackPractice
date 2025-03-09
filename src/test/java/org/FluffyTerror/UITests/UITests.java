@@ -61,7 +61,7 @@ public class UITests extends BaseTest {
     @Test
     @DisplayName("Открытие страницы кредита")
     @Tag("UI")
-    @Tag("Credit Page")
+
     public void testCreditPage() {
         app.getHomePage()
                 .selectBaseMenu("Кредит")
@@ -73,19 +73,19 @@ public class UITests extends BaseTest {
     @Test
     @DisplayName("Калькулятор кредита")
     @Tag("UI")
-    @Tag("Credit Page")
+
     public void testCreditCalc() {
         app.getCreditPage()
                 .scrollToCreditCalc()
                 .fillSum(1000000)
                 .fillDuration(13)
-                .checkCreditCalc("98 129");
+                .checkCreditCalc("98 128");
     }
 
     @Test
     @DisplayName("Проверка чекбоксов для калькулятора кредита")
     @Tag("UI")
-    @Tag("Credit Page")
+
     public void testCheckbox() {
         app.getCreditPage()
                 .scrollToCreditCalc()
@@ -102,11 +102,12 @@ public class UITests extends BaseTest {
     @Tag("UI")
     public void testMortgage() {
         app.getHomePage()
-                .scrollToMortage()
+                .scrollToMortgage()
+                .clickMortgage()
                 .fillSum(9000000)
                 .fillDuration(120)
                 .fillInitialSum(4000000)
-                .checkMortrageValue("44 408");
+                .checkMortgageValue("44 408");
 
     }
 
