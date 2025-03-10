@@ -15,7 +15,8 @@ public class VesnaDepositPage extends BasePage {
     private WebElement Deposit;
 
     public void checkOpenVesnaPage() {
-        sleep(500);
+        waitUtilElementToBeVisible(Vesna);
+        waitUtilElementToBeVisible(Deposit);
         String title = Deposit.getText() + ' ' + Vesna.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
@@ -23,7 +24,8 @@ public class VesnaDepositPage extends BasePage {
     }
 
     public void checkOpenVesnaPageJUnit() {
-        sleep(500);
+        waitUtilElementToBeVisible(Vesna);
+        waitUtilElementToBeVisible(Deposit);
         String title = Deposit.getText() + ' ' + Vesna.getText();
         Assertions.assertEquals("Вклад «Весна»", title," Заголовок отсутствует/не соответствует требуемому");
     }

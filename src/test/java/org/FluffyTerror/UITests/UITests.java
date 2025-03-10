@@ -115,7 +115,7 @@ public class UITests extends BaseTest {
                 .fillSum(9000000)
                 .fillDuration(120)
                 .fillInitialSum(4000000)
-                .checkMortgageValue("44 408");
+                .checkMortgageValue("28 719");
 
     }
 

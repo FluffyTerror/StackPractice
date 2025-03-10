@@ -32,7 +32,8 @@ public class CreditPage extends BasePage {
 
 
     public void checkOpenCreditPage() {
-        sleep(500);
+        waitUtilElementToBeVisible(consumer);
+        waitUtilElementToBeVisible(credit);
         String title = consumer.getText() + ' ' + credit.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
@@ -46,17 +47,18 @@ public class CreditPage extends BasePage {
     }
 
     public CreditPage fillSum(Integer sum) {
+        waitUtilElementToBeVisible(creditSum);
         ((JavascriptExecutor) driverManager.getDriver()).executeScript("arguments[0].value='';", creditSum);
         fillIntInputField(creditSum, sum);
         return this;
     }
 
     public CreditPage fillDuration(Integer duration) {
+        waitUtilElementToBeVisible(creditDuration);
         if (duration < 13) {
             duration = 13;
         }
         fillIntInputField(creditDuration, duration);
-        sleep(500);
         return this;
 
     }
@@ -65,17 +67,20 @@ public class CreditPage extends BasePage {
      * Ставит чекбокс "получаю зп в банке" в состояние активен
      */
     public CreditPage bankSalary() {
-        waitUtilElementToBeVisible(bankSalaryCheckbox).click();
+        waitUtilElementToBeVisible(bankSalaryCheckbox);
+        waitUtilElementToBeClickable(bankSalaryCheckbox).click();
         return this;
     }
 
     public CreditPage bankPension() {
-        waitUtilElementToBeVisible(bankPensionCheckbox).click();
-        sleep(500);
+        waitUtilElementToBeVisible(bankPensionCheckbox);
+        waitUtilElementToBeClickable(bankPensionCheckbox).click();
         return this;
     }
 
     public void checkCreditCalc(String sum) {
+        sleep(250);//число не успевает прогрузиться
+        waitUtilElementToBeVisible(monthlyPayment);
         String value = monthlyPayment.getText();
         assertThat(value)
                 .as("Сумма кредита не соответствует ожидаемому!")

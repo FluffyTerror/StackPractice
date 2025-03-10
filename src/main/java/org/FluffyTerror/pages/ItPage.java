@@ -13,7 +13,9 @@ public class ItPage extends BasePage {
     private WebElement finTech;
 
     public void checkOpenItPage() {
-        sleep(500);
+        sleep(250);//страница не успевает прогрузиться
+        waitUtilElementToBeVisible(expertise);
+        waitUtilElementToBeVisible(finTech);
         String title = finTech.getText() + ' ' + expertise.getText();
         assertThat(title).as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Развивайте финтех, прокачивайте экспертизу");

@@ -60,7 +60,7 @@ public class HomePage extends BasePage {
         WebElement mainMenu = driverManager.getDriver().findElement(By.xpath(mainMenuXPath));
 
         actions.moveToElement(mainMenu).perform();
-        sleep(500);
+        waitUtilElementToBeVisible(mainMenu);
 
         return this;
     }
@@ -150,7 +150,6 @@ public class HomePage extends BasePage {
      */
     public HomePage fillInitialSum(Integer sum) {
         fillIntInputField(inputInitialSumValue, sum);
-        sleep(500);
         return this;
     }
 
@@ -189,6 +188,7 @@ public class HomePage extends BasePage {
      * @param sum ожидаемая сумма кредита
      */
     public void checkMortgageValue(String sum) {
+        waitUtilElementToBeVisible(mortgageValue);
         String value = mortgageValue.getText();
         assertThat(value)
                 .as("Сумма кредита не соответствует ожидаемому!")

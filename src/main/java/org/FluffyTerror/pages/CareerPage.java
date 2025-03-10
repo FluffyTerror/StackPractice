@@ -20,6 +20,7 @@ public class CareerPage extends BasePage {
 
 
     public CareerPage checkOpenCareerPage() {
+        waitUtilElementToBeVisible(bank);
         waitUtilElementToBeVisible(career);
         String title = bank.getText() + ' ' + career.getText();
         assertThat(title)
