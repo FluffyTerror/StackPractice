@@ -1,6 +1,5 @@
 package org.FluffyTerror.pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -19,10 +18,9 @@ public class CareerPage extends BasePage {
     @FindBy(css = "div.css-np8lw6 a[href='/career/it']")
     private WebElement it;
 
-    WebDriver driver = driverManager.getDriver();
 
     public CareerPage checkOpenCareerPage() {
-        sleep(1000);
+        waitUtilElementToBeVisible(career);
         String title = bank.getText() + ' ' + career.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
@@ -36,8 +34,8 @@ public class CareerPage extends BasePage {
     }
 
     public ItPage selectItPage() {
+        waitUtilElementToBeVisible(it);
         waitUtilElementToBeClickable(it).click();
-        sleep(2000);
         return pageManager.getItPage();
     }
 

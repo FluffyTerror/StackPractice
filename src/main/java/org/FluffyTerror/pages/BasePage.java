@@ -2,7 +2,6 @@ package org.FluffyTerror.pages;
 
 import org.FluffyTerror.managers.DriverManager;
 import org.FluffyTerror.managers.PageManager;
-import org.FluffyTerror.managers.PropsManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,12 +29,7 @@ public class BasePage {
      * @see WebDriverWait
      */
     protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), Duration.ofSeconds(10));
-    /**
-     * Менеджер properties
-     *
-     * @see PropsManager#getPropsManager()
-     */
-    private final PropsManager props = PropsManager.getPropsManager();
+
 
     /**
      * Конструктор позволяющий инициализировать все странички и их элементы помеченные аннотацией {@link FindBy}
@@ -52,7 +46,7 @@ public class BasePage {
      * Явное ожидание состояния clickable элемента
      *
      * @param element - веб-элемент который требует проверки clickable
-     * @return WebElement - возвращаем тот же веб элемент что был передан в функцию
+     * @return WebElement - возвращаем тот же веб элемент, что был передан в функцию
      * @see WebDriverWait
      * @see org.openqa.selenium.support.ui.FluentWait
      * @see org.openqa.selenium.support.ui.Wait
@@ -63,9 +57,9 @@ public class BasePage {
     }
 
     /**
-     * Явное ожидание того что элемент станет видемым
+     * Явное ожидание того что элемент станет видимым
      *
-     * @param element - веб элемент который мы ожидаем что будет  виден на странице
+     * @param element - веб элемент который мы ожидаем что будет виден на странице
      */
     protected WebElement waitUtilElementToBeVisible(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element));
@@ -100,14 +94,13 @@ public class BasePage {
     /**
      * Функция для ожидания
      *
-     * @param sec
      */
 
     public void sleep(long sec) {
         try {
             Thread.sleep(sec);
         } catch (Exception e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -119,8 +112,12 @@ public class BasePage {
      */
     protected BasePage scrollToElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
-        sleep(2000);
+        js.executeAsyncScript(
+                "var element = arguments[0];" +
+                        "var callback = arguments[arguments.length - 1];" +
+                        "element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});" +
+                        "window.setTimeout(callback, 500);", element);
+        waitUtilElementToBeVisible(element);
         return this;
     }
 

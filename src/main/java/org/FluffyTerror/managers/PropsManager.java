@@ -1,6 +1,5 @@
 package org.FluffyTerror.managers;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -9,7 +8,7 @@ public class PropsManager {
 
     /**
      * Переменна для хранения данных считанных из файла properties и переданных пользователем
-     * Т.е. переменная для хранения пользовательских properties
+     * Т.е. Переменная для хранения пользовательских properties
      *
      * @see Properties - реализован на основе {@link java.util.Hashtable}
      */
@@ -51,12 +50,11 @@ public class PropsManager {
      * Либо из файла переданного пользователем через настройку -DpropFile={nameFile}
      */
     private void loadApplicationProperties() {
-        try {
-            properties.load(new FileInputStream(
-                    new File("src/main/resources/" +
-                            System.getProperty("propFile", "application") + ".properties")));
+        String filePath = "src/main/resources/" + System.getProperty("propFile", "application") + ".properties";
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            properties.load(fis);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

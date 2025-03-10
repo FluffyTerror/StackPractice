@@ -14,14 +14,12 @@ public class CardsPage extends BasePage {
 //не уверен, что стоило трогать...
     private WebElement aboutYarkaya;
 
-    public CardsPage checkOpenCardsPage() {
+    public void checkOpenCardsPage() {
         waitUtilElementToBeVisible(cardTitle);
-        sleep(1000);//ноут тупил, так что сделал так, чтобы успела страница загрузиться
         assertThat(cardTitle.getText())
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Дебетовые карты");
 
-        return this;
     }
 
     public YarkayaCardPage selectyarkayaCardPage() {

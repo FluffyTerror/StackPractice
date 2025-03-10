@@ -12,11 +12,10 @@ public class ItPage extends BasePage {
     @FindBy(css = "h1.css-uyawat")
     private WebElement finTech;
 
-    public ItPage checkOpenItPage() {
-        sleep(1000);
+    public void checkOpenItPage() {
+        sleep(500);
         String title = finTech.getText() + ' ' + expertise.getText();
         assertThat(title).as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Развивайте финтех, прокачивайте экспертизу");
-        return this;
     }
 }

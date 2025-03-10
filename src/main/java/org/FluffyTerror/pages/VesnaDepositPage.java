@@ -1,5 +1,6 @@
 package org.FluffyTerror.pages;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -13,13 +14,18 @@ public class VesnaDepositPage extends BasePage {
     @FindBy(css = "h1.css-uyawat")
     private WebElement Deposit;
 
-    public VesnaDepositPage checkOpenVesnaPage() {
-        sleep(1000);
+    public void checkOpenVesnaPage() {
+        sleep(500);
         String title = Deposit.getText() + ' ' + Vesna.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Вклад «Весна»");
-        return this;
+    }
+
+    public void checkOpenVesnaPageJUnit() {
+        sleep(500);
+        String title = Deposit.getText() + ' ' + Vesna.getText();
+        Assertions.assertEquals("Вклад «Весна»", title," Заголовок отсутствует/не соответствует требуемому");
     }
 
 }

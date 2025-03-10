@@ -1,9 +1,7 @@
 package org.FluffyTerror.UITests;
 
 import org.FluffyTerror.BaseTest.BaseTest;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class UITests extends BaseTest {
     @Test
@@ -21,16 +19,29 @@ public class UITests extends BaseTest {
     }
 
     @Test
-    @DisplayName("Вклад Весна")
+    @DisplayName("Вклад Весна AssertJ")
     @Tag("UI")
     public void testDeposit() {
         app.getHomePage()
                 .selectBaseMenu("Вклады")
-                .selectDepositSubMenu("Все вклады")
+                .selectDepositSubMenu("Все вклады") //попробовать привязаться к страничкам
                 .checkOpenDepositPage()
                 .selectVesnaDepositPage()
                 .checkOpenVesnaPage();
     }
+
+    @Test
+    @DisplayName("Вклад Весна JUnit")
+    @Tag("UI")
+    public void testDepositJUnit() {
+        app.getHomePage()
+                .selectBaseMenu("Вклады")
+                .selectDepositSubMenu("Все вклады") //попробовать привязаться к страничкам
+                .checkOpenDepositPage()
+                .selectVesnaDepositPage()
+                .checkOpenVesnaPageJUnit();
+    }
+
 
     @Test
     @DisplayName("Проверка открытия страницы карты Яркая")
@@ -47,6 +58,7 @@ public class UITests extends BaseTest {
     }
 
 
+
     @Test
     @DisplayName("Открытие страницы дебетовых карт")
     @Tag("UI")
@@ -61,39 +73,35 @@ public class UITests extends BaseTest {
     @Test
     @DisplayName("Открытие страницы кредита")
     @Tag("UI")
-
     public void testCreditPage() {
         app.getHomePage()
                 .selectBaseMenu("Кредит")
                 .selectCreditSubMenu("Кредит наличными")
-                .checkOpenCreditPage()
-        ;
+                .checkOpenCreditPage();
     }
 
     @Test
     @DisplayName("Калькулятор кредита")
     @Tag("UI")
-
     public void testCreditCalc() {
         app.getCreditPage()
                 .scrollToCreditCalc()
-                .fillSum(1000000)
+                .fillSum(1500000)
                 .fillDuration(13)
-                .checkCreditCalc("98 128");
+                .checkCreditCalc("147 192");
     }
 
     @Test
     @DisplayName("Проверка чекбоксов для калькулятора кредита")
     @Tag("UI")
-
     public void testCheckbox() {
         app.getCreditPage()
                 .scrollToCreditCalc()
-                .fillSum(1000000)
+                .fillSum(1500000)
                 .fillDuration(13)
                 .bankSalary()
                 .bankPension()
-                .checkCreditCalc("95 726");
+                .checkCreditCalc("143 587");
     }
 
 

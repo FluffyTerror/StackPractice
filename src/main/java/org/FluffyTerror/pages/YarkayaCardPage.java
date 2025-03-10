@@ -1,6 +1,5 @@
 package org.FluffyTerror.pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -19,10 +18,9 @@ public class YarkayaCardPage extends BasePage {
     @FindBy(css = "input[name=\"patronym\"]")
     private WebElement patronym;
 
-    WebDriver driver = driverManager.getDriver();
 
     public YarkayaCardPage checkOpenYarkayaPage() {
-        sleep(1000);
+        waitUtilElementToBeVisible(yarkayaTitle);
         String title = yarkayaTitle.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
@@ -55,11 +53,9 @@ public class YarkayaCardPage extends BasePage {
     /**
      * Заполняет поле отчества
      */
-    public YarkayaCardPage fillPatronym(String name) {
+    public void fillPatronym(String name) {
         fillInputField(patronym, name);
-        sleep(2000);//чисто для того чтобы посмотрели как все заполнено
-        return this;
-
+      //  sleep(500);//чисто для того чтобы посмотрели как все заполнено
     }
 
 }

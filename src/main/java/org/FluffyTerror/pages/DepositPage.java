@@ -21,8 +21,9 @@ public class DepositPage extends BasePage {
      */
 
     public DepositPage checkOpenDepositPage() {
+        sleep(500);
         waitUtilElementToBeVisible(depositTitle);
-        sleep(1000);//ноут тупил
+        //ноут тупил
         assertThat(depositTitle.getText())
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Вклады и накопительные счета");

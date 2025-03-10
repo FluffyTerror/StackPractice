@@ -1,6 +1,6 @@
 package org.FluffyTerror.managers;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import static org.FluffyTerror.utils.Const.IMPLICITLY_WAIT;
 import static org.FluffyTerror.utils.Const.PAGE_LOAD_TIMEOUT;
@@ -29,8 +29,8 @@ public class InitManager {
      */
     public static void initFramework() {
         driverManager.getDriver().manage().window().maximize();
-        driverManager.getDriver().manage().timeouts().implicitlyWait(Integer.parseInt(props.getProperty(IMPLICITLY_WAIT)), TimeUnit.SECONDS);
-        driverManager.getDriver().manage().timeouts().pageLoadTimeout(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT)), TimeUnit.SECONDS);
+        driverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT))));
     }
 
     /**

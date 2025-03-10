@@ -1,6 +1,6 @@
 package org.FluffyTerror.pages;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -30,16 +30,14 @@ public class CreditPage extends BasePage {
     @FindBy(css = "h2.css-1bw6t7s")
     private WebElement monthlyPayment;
 
-    WebDriver driver = driverManager.getDriver();
 
-    public CreditPage checkOpenCreditPage() {
-        sleep(1000);
+    public void checkOpenCreditPage() {
+        sleep(500);
         String title = consumer.getText() + ' ' + credit.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Потребительский кредит");
 
-        return this;
     }
 
 
@@ -48,6 +46,7 @@ public class CreditPage extends BasePage {
     }
 
     public CreditPage fillSum(Integer sum) {
+        ((JavascriptExecutor) driverManager.getDriver()).executeScript("arguments[0].value='';", creditSum);
         fillIntInputField(creditSum, sum);
         return this;
     }
@@ -57,7 +56,7 @@ public class CreditPage extends BasePage {
             duration = 13;
         }
         fillIntInputField(creditDuration, duration);
-        sleep(2000);
+        sleep(500);
         return this;
 
     }
@@ -72,16 +71,15 @@ public class CreditPage extends BasePage {
 
     public CreditPage bankPension() {
         waitUtilElementToBeVisible(bankPensionCheckbox).click();
-        sleep(2000);
+        sleep(500);
         return this;
     }
 
-    public CreditPage checkCreditCalc(String sum) {
+    public void checkCreditCalc(String sum) {
         String value = monthlyPayment.getText();
         assertThat(value)
                 .as("Сумма кредита не соответствует ожидаемому!")
                 .isEqualTo(sum + " ₽");
-        return this;
     }
 
 }

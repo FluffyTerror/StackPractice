@@ -1,13 +1,11 @@
 package org.FluffyTerror.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,15 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Класс HomePage описывает основные действия на главной странице.
  */
 public class HomePage extends BasePage {
-
-    @FindBy(css = "nav.css-lmwlkq")
-    private List<WebElement> listBaseMenu;
-
-    @FindBy(xpath = "//p[contains(text(), 'Вклады')]")
-    private WebElement deposits;
-
-    @FindBy(css = "div.css-ymrs81 div.css-1cz2lgq a[href='/retail/deposits']")
-    private List<WebElement> depositSubMenu;
 
     /**
      * Кнопка переключения на вкладку Ипотека.
@@ -50,7 +39,6 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[@class='css-1ac3fhy']//p[contains(text(), 'Ежемесячный платеж')]/following-sibling::h2[@class='css-1bw6t7s']")
     private WebElement mortgageValue;
 
-    private WebDriver driver = driverManager.getDriver();
 
     /**
      * Конструктор страницы.
@@ -58,7 +46,6 @@ public class HomePage extends BasePage {
      * @param actions объект Actions для работы с мышью и клавиатурой
      */
     public HomePage(Actions actions) {
-        // Конструктор может быть дополнен инициализацией PageFactory, если требуется
     }
 
     /**
@@ -73,7 +60,7 @@ public class HomePage extends BasePage {
         WebElement mainMenu = driverManager.getDriver().findElement(By.xpath(mainMenuXPath));
 
         actions.moveToElement(mainMenu).perform();
-        sleep(1000);
+        sleep(500);
 
         return this;
     }
@@ -94,7 +81,7 @@ public class HomePage extends BasePage {
     }
 
     /**
-     * Выбирает подменю для депозитов и переходит на страницу депозита.
+     * Выбирает под-меню для депозитов и переходит на страницу депозита.
      *
      * @param nameSubMenu наименование подменю
      * @return экземпляр DepositPage
@@ -104,7 +91,7 @@ public class HomePage extends BasePage {
     }
 
     /**
-     * Выбирает подменю для карт и переходит на страницу карт.
+     * Выбирает под-меню для карт и переходит на страницу карт.
      *
      * @param nameSubMenu наименование подменю
      * @return экземпляр CardsPage
@@ -114,7 +101,7 @@ public class HomePage extends BasePage {
     }
 
     /**
-     * Выбирает подменю для кредита и переходит на страницу кредита.
+     * Выбирает под-меню для кредита и переходит на страницу кредита.
      *
      * @param nameSubMenu наименование подменю
      * @return экземпляр CreditPage
@@ -163,7 +150,7 @@ public class HomePage extends BasePage {
      */
     public HomePage fillInitialSum(Integer sum) {
         fillIntInputField(inputInitialSumValue, sum);
-        sleep(2000);
+        sleep(500);
         return this;
     }
 
@@ -195,24 +182,16 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    /**
-     * Прокручивает страницу до поля первоначального взноса.
-     *
-     * @return текущий экземпляр HomePage для цепочки вызовов
-     */
-
 
     /**
      * Проверяет, что отображаемое значение кредита соответствует ожидаемому.
      *
      * @param sum ожидаемая сумма кредита
-     * @return текущий экземпляр HomePage для цепочки вызовов
      */
-    public HomePage checkMortgageValue(String sum) {
+    public void checkMortgageValue(String sum) {
         String value = mortgageValue.getText();
         assertThat(value)
                 .as("Сумма кредита не соответствует ожидаемому!")
                 .isEqualTo(sum + " ₽");
-        return this;
     }
 }
