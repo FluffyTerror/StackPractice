@@ -53,8 +53,8 @@ public class UITests extends BaseTest {
                 .scrollToElement()
                 .fillLastName("Иванович")
                 .fillName("Иван")
-                .fillPatronym("Иванов")//дальше не вижу смысла заполнять так как чисто тестируем UI
-        ;
+                .fillPatronym("Иванов")
+                .checkInputFields();//проверка с множественным assert
     }
 
 
@@ -118,6 +118,4 @@ public class UITests extends BaseTest {
                 .checkMortgageValue("28 719");
 
     }
-
-
 }

@@ -93,12 +93,12 @@ public class BasePage {
 
     /**
      * Функция для ожидания
-     *
+     * @param millis целевой элемент
      */
 
-    public void sleep(long sec) {
+    public void sleep(long millis) {
         try {
-            Thread.sleep(sec);
+            Thread.sleep(millis);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -116,8 +116,10 @@ public class BasePage {
                 "var element = arguments[0];" +
                         "var callback = arguments[arguments.length - 1];" +
                         "element.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});" +
-                        "window.setTimeout(callback, 500);", element);
+                        "window.setTimeout(callback, 1500);", element);
         waitUtilElementToBeVisible(element);
+        element.isDisplayed();
+        element.isEnabled();
         return this;
     }
 

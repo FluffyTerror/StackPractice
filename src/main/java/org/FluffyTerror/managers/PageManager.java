@@ -1,7 +1,7 @@
 package org.FluffyTerror.managers;
 
 import org.FluffyTerror.pages.*;
-import org.openqa.selenium.interactions.Actions;
+
 
 import static org.FluffyTerror.utils.Const.BASE_CARDS_PAGE;
 import static org.FluffyTerror.utils.Const.BASE_CREDIT_PAGE;
@@ -17,10 +17,6 @@ public class PageManager {
      */
     private final DriverManager driverManager = DriverManager.getDriverManager();
 
-    /**
-     * Actions для работы с элементами
-     */
-    private final Actions actions = new Actions(driverManager.getDriver());
 
     /**
      * Страницы
@@ -91,7 +87,7 @@ public class PageManager {
 
     public HomePage getHomePage() {
         if (homePage == null) {
-            homePage = new HomePage(actions);
+            homePage = new HomePage();
         }
         return homePage;
     }

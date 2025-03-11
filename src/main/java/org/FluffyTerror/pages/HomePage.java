@@ -40,12 +40,10 @@ public class HomePage extends BasePage {
     private WebElement mortgageValue;
 
 
-    /**
-     * Конструктор страницы.
-     *
-     * @param actions объект Actions для работы с мышью и клавиатурой
-     */
-    public HomePage(Actions actions) {
+
+
+    private Actions getActions() {
+        return new Actions(driverManager.getDriver());
     }
 
     /**
@@ -55,11 +53,10 @@ public class HomePage extends BasePage {
      * @return текущий экземпляр HomePage для цепочки вызовов
      */
     public HomePage selectBaseMenu(String nameBaseMenu) {
-        Actions actions = new Actions(driverManager.getDriver());
         String mainMenuXPath = String.format("//p[contains(text(),'%s')]", nameBaseMenu);
         WebElement mainMenu = driverManager.getDriver().findElement(By.xpath(mainMenuXPath));
 
-        actions.moveToElement(mainMenu).perform();
+        getActions().moveToElement(mainMenu).perform();
         waitUtilElementToBeVisible(mainMenu);
 
         return this;
@@ -168,6 +165,7 @@ public class HomePage extends BasePage {
      * @return текущий экземпляр HomePage для цепочки вызовов
      */
     public HomePage scrollToMortgage() {
+        mortgageButton.isDisplayed();
         return (HomePage) scrollToElement(mortgageButton);
     }
 
@@ -177,6 +175,8 @@ public class HomePage extends BasePage {
      * @return текущий экземпляр HomePage для цепочки вызовов
      */
     public HomePage clickMortgage() {
+        mortgageButton.isDisplayed();
+        mortgageButton.isEnabled();
         wait.until(ExpectedConditions.elementToBeClickable(mortgageButton)).click();
         return this;
     }

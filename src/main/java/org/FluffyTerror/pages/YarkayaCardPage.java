@@ -1,7 +1,10 @@
 package org.FluffyTerror.pages;
 
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -53,9 +56,26 @@ public class YarkayaCardPage extends BasePage {
     /**
      * Заполняет поле отчества
      */
-    public void fillPatronym(String name) {
+    public YarkayaCardPage fillPatronym(String name) {
         fillInputField(patronym, name);
-      //  sleep(500);//чисто для того чтобы посмотрели как все заполнено
+        return this;
+        //  sleep(500);//чисто для того чтобы посмотрели как все заполнено
     }
 
+    public void checkInputFields() {
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(lastName.getAttribute("value"))
+                    .as("Поле не содержит необходимой информации!")
+                    .isEqualTo("Иванович");
+            softAssertions.assertThat(firstName.getAttribute("value"))
+                    .as("Поле не содержит необходимой информации!")
+                    .isEqualTo("Иван");
+            softAssertions.assertThat(patronym.getAttribute("value"))
+                    .as("Поле не содержит необходимой информации!")
+                    .isEqualTo("Иванов");
+        });
+    }
+
+
 }
+

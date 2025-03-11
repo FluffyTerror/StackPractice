@@ -79,7 +79,7 @@ public class CreditPage extends BasePage {
     }
 
     public void checkCreditCalc(String sum) {
-        sleep(250);//число не успевает прогрузиться
+        sleep(350);//число не успевает прогрузиться
         waitUtilElementToBeVisible(monthlyPayment);
         String value = monthlyPayment.getText();
         assertThat(value)
