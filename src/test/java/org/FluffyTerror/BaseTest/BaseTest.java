@@ -1,5 +1,7 @@
 package org.FluffyTerror.BaseTest;
 
+import io.cucumber.java.Scenario;
+import io.qameta.allure.Allure;
 import org.FluffyTerror.managers.DriverManager;
 import org.FluffyTerror.managers.InitManager;
 import org.FluffyTerror.managers.PageManager;
@@ -8,13 +10,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.*;
+
 import static org.FluffyTerror.utils.Const.BASE_URL;
 
 public class BaseTest {
     protected PageManager app = PageManager.getPageManager();
 
     private final DriverManager driverManager = DriverManager.getDriverManager();
-
 
     @BeforeAll
     public static void beforeAll() {

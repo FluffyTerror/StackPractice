@@ -40,8 +40,6 @@ public class HomePage extends BasePage {
     private WebElement mortgageValue;
 
 
-
-
     private Actions getActions() {
         return new Actions(driverManager.getDriver());
     }

@@ -43,10 +43,12 @@ public class CreditPage extends BasePage {
 
 
     public CreditPage scrollToCreditCalc() {
+        sleep(200);
         return (CreditPage) scrollToElement(creditSum);
     }
 
     public CreditPage fillSum(Integer sum) {
+
         waitUtilElementToBeVisible(creditSum);
         ((JavascriptExecutor) driverManager.getDriver()).executeScript("arguments[0].value='';", creditSum);
         fillIntInputField(creditSum, sum);

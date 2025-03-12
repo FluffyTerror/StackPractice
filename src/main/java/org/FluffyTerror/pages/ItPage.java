@@ -13,7 +13,7 @@ public class ItPage extends BasePage {
     private WebElement finTech;
 
     public void checkOpenItPage() {
-        sleep(250);//страница не успевает прогрузиться
+        sleep(450);//страница не успевает прогрузиться
         waitUtilElementToBeVisible(expertise);
         waitUtilElementToBeVisible(finTech);
         String title = finTech.getText() + ' ' + expertise.getText();

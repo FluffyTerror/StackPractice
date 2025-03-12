@@ -43,7 +43,6 @@
             <artifactId>allure-bom</artifactId>
             <version>${allure.version}</version>
             <type>pom</type>
-            <scope>import</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit5 -->
         <dependency>
@@ -127,7 +126,6 @@
                 </systemPropertyVariables>
             </configuration>
         </plugin>
-
     </plugins>
 </build>
 </project>
