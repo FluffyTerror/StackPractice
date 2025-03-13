@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -85,6 +86,7 @@ public class HomePage extends BasePage {
         return selectSubMenu(nameSubMenu, () -> pageManager.getDepositPage());
     }
 
+
     /**
      * Выбирает под-меню для карт и переходит на страницу карт.
      *
@@ -103,6 +105,16 @@ public class HomePage extends BasePage {
      */
     public CreditPage selectCreditSubMenu(String nameSubMenu) {
         return selectSubMenu(nameSubMenu, () -> pageManager.getCreditPage());
+    }
+
+    public void checkParam(WebElement element, Predicate<WebElement> predicate, String description) {
+        assertThat(element).as("проверка условия").matches(predicate, description);
+    }
+
+    public void checkParam(WebElement element, Predicate<WebElement> predicate) {
+        String description = String.format("Ошибка при проверке элемента '%s' на соответствие условию '%s'", element, predicate);
+
+        checkParam(element, predicate, description);
     }
 
     /**
@@ -191,5 +203,22 @@ public class HomePage extends BasePage {
         assertThat(value)
                 .as("Сумма кредита не соответствует ожидаемому!")
                 .isEqualTo(sum + " ₽");
+    }
+
+    public void checkCareerIsDisplayed() {
+        Predicate<WebElement> predicate = element -> element.isDisplayed();
+        checkParam(career, predicate);
+    }
+
+    public void checkChildCareer(String expectedText) {
+
+        Predicate<WebElement> predicate =
+                element -> element.getText().equals(expectedText);
+
+        WebElement careerFirstText = career.findElement(By.cssSelector("a.chakra-link.css-vg2g2m a[href='/career'] span.chakra-text.css-1qu81il"));
+
+        checkParam(careerFirstText, predicate);
+
+
     }
 }

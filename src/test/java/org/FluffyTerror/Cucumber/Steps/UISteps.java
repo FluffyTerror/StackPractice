@@ -1,6 +1,7 @@
 package org.FluffyTerror.Cucumber.Steps;
 
 import io.cucumber.java.ru.Допустим;
+import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
@@ -129,16 +130,13 @@ public class UISteps extends BaseTest {
     @Step("Заполнение суммы кредита: {sum}, длительность: {duration}, проверка суммы: {expectedTotal}")
     @Допустим("поле суммы заполнено числом {int} и поле длительности заполнено {int} и общая сумма кредита {string}")
     public void поле_суммы_заполнено_числом(Integer sum, Integer duration, String expectedTotal) {
-        try {
             app.getCreditPage()
                     .scrollToCreditCalc()
                     .fillSum(sum)
                     .fillDuration(duration)
                     .checkCreditCalc(expectedTotal);
-        } catch (Exception e) {
-            attachScreenshot("Ошибка при заполнении кредитного калькулятора");
-            throw e;
-        }
+        attachScreenshot("Ошибка при заполнении кредитного калькулятора");
+
     }
 
     @Step("выбран подраздел кредита")
@@ -227,11 +225,21 @@ public class UISteps extends BaseTest {
     }
 
 
-
     @Attachment(value = "Screenshot", type = "image/png")
     private void attachScreenshot(String name) {
         byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         Allure.addAttachment(name, new ByteArrayInputStream(screenshot));
     }
 
+    @Тогда("дочерний элемент баннера содержит текст {string}")
+    public void дочернийЭлементБаннераСодержитТекст(String expectedText) {
+        app.getHomePage().scrollToCareer().checkChildCareer(expectedText);
+    }
+
+    @Тогда("баннер отображен")
+    public void баннерОтображен() {
+        app.getHomePage()
+                .scrollToCareer()
+                .checkCareerIsDisplayed();
+    }
 }

@@ -118,4 +118,17 @@ public class UITests extends BaseTest {
                 .checkMortgageValue("28 719");
 
     }
+    @Test
+    public void testFunc(){
+        app.getHomePage()
+                .scrollToCareer()
+                .checkCareerIsDisplayed();
+    }
+
+    @Test
+    public void testFunc2(){
+        app.getHomePage()
+                .scrollToCareer()
+                .checkChildCareer("Карьера в БСПБ - ");
+    }
 }
