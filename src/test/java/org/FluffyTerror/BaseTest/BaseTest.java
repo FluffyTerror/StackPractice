@@ -1,6 +1,6 @@
 package org.FluffyTerror.BaseTest;
 
-import io.cucumber.java.Scenario;
+
 import io.qameta.allure.Allure;
 import org.FluffyTerror.managers.DriverManager;
 import org.FluffyTerror.managers.InitManager;
@@ -9,8 +9,10 @@ import org.FluffyTerror.managers.PropsManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
 
 import static org.FluffyTerror.utils.Const.BASE_URL;
 
@@ -35,5 +37,18 @@ public class BaseTest {
         InitManager.quitFramework();
     }
 
+    public void attachScreenshot(String name) {
+        byte[] screenshot = ((TakesScreenshot) driverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+        Allure.attachment(name, new ByteArrayInputStream(screenshot));
+    }
+
+    public void attachPageSource() {
+        String currentUrl = driverManager.getDriver().getCurrentUrl();
+        Allure.attachment("Ссылка", currentUrl);
+    }
+
 
 }
+
+
+

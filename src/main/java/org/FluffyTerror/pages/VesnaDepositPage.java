@@ -18,6 +18,7 @@ public class VesnaDepositPage extends BasePage {
         waitUtilElementToBeVisible(Vesna);
         waitUtilElementToBeVisible(Deposit);
         String title = Deposit.getText() + ' ' + Vesna.getText();
+
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Вклад «Весна»");

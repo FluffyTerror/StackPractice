@@ -4,8 +4,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class YarkayaCardPage extends BasePage {
@@ -66,7 +64,7 @@ public class YarkayaCardPage extends BasePage {
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(lastName.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
-                    .isEqualTo("Иванович");
+                    .isEqualTo("Ива");
             softAssertions.assertThat(firstName.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
                     .isEqualTo("Иван");

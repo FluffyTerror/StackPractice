@@ -1,4 +1,4 @@
-package org.FluffyTerror.UITests;
+package org.FluffyTerror.JUnitTests;
 
 import org.FluffyTerror.BaseTest.BaseTest;
 import org.junit.jupiter.api.*;

@@ -2,16 +2,10 @@ package org.FluffyTerror.Cucumber.Steps;
 
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.Тогда;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.FluffyTerror.BaseTest.BaseTest;
 import org.FluffyTerror.managers.DriverManager;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-
-import java.io.ByteArrayInputStream;
 
 public class UISteps extends BaseTest {
 
@@ -22,8 +16,10 @@ public class UISteps extends BaseTest {
     public void открыта_страница_по_адресу(String url) {
         try {
             driver.get(url);
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при открытии страницы");
+            attachPageSource();
             throw e;
         }
     }
@@ -33,8 +29,10 @@ public class UISteps extends BaseTest {
     public void выполнено_нажатие_на_раздел(String baseMenu) {
         try {
             app.getHomePage().selectBaseMenu(baseMenu);
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при нажатии на раздел");
+            attachPageSource();
             throw e;
         }
     }
@@ -44,10 +42,13 @@ public class UISteps extends BaseTest {
     public void выбран_подраздел(String subMenu) {
         try {
             app.getHomePage().selectDepositSubMenu(subMenu);
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при выборе подраздела вклада");
+            attachPageSource();
             throw e;
         }
+
     }
 
     @Step("Проверка, что страница вкладов открылась")
@@ -55,8 +56,10 @@ public class UISteps extends BaseTest {
     public void проверить_что_страница_вкладов_открылась() {
         try {
             app.getDepositPage().checkOpenDepositPage();
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при проверке страницы вкладов");
+            attachPageSource();
             throw e;
         }
     }
@@ -66,8 +69,10 @@ public class UISteps extends BaseTest {
     public void выбрать_страницу_вклада_весна() {
         try {
             app.getDepositPage().selectVesnaDepositPage();
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при выборе вклада 'Весна'");
+            attachPageSource();
             throw e;
         }
     }
@@ -77,8 +82,10 @@ public class UISteps extends BaseTest {
     public void проверить_что_страница_вклада_весна_открылась() {
         try {
             app.getVesnaDepositPage().checkOpenVesnaPage();
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при проверке страницы вклада 'Весна'");
+            attachPageSource();
             throw e;
         }
     }
@@ -88,8 +95,10 @@ public class UISteps extends BaseTest {
     public void поле_фамилии_заполнено(String lastName) {
         try {
             app.getYarkayaCardPage().fillLastName(lastName);
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при заполнении фамилии");
+            attachPageSource();
             throw e;
         }
     }
@@ -99,8 +108,10 @@ public class UISteps extends BaseTest {
     public void поле_имя_заполнено(String firstName) {
         try {
             app.getYarkayaCardPage().fillName(firstName);
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при заполнении имени");
+            attachPageSource();
             throw e;
         }
     }
@@ -110,8 +121,10 @@ public class UISteps extends BaseTest {
     public void поле_отчества_заполнено(String patronymic) {
         try {
             app.getYarkayaCardPage().fillPatronym(patronymic);
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при заполнении отчества");
+            attachPageSource();
             throw e;
         }
     }
@@ -121,8 +134,10 @@ public class UISteps extends BaseTest {
     public void проверить_значения_в_полях() {
         try {
             app.getYarkayaCardPage().checkInputFields();
-        } catch (Exception e) {
+            attachPageSource();
+        } catch (AssertionError e) {
             attachScreenshot("Ошибка при проверке значений в полях");
+            attachPageSource();
             throw e;
         }
     }
@@ -130,106 +145,217 @@ public class UISteps extends BaseTest {
     @Step("Заполнение суммы кредита: {sum}, длительность: {duration}, проверка суммы: {expectedTotal}")
     @Допустим("поле суммы заполнено числом {int} и поле длительности заполнено {int} и общая сумма кредита {string}")
     public void поле_суммы_заполнено_числом(Integer sum, Integer duration, String expectedTotal) {
+        try {
             app.getCreditPage()
                     .scrollToCreditCalc()
                     .fillSum(sum)
                     .fillDuration(duration)
                     .checkCreditCalc(expectedTotal);
-        attachScreenshot("Ошибка при заполнении кредитного калькулятора");
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при заполнении полей кредита");
+            attachPageSource();
+            throw e;
+        }
 
     }
 
     @Step("выбран подраздел кредита")
     @Допустим("выбран подраздел кредита {string}")
     public void выбран_подраздел_кредита(String string) {
-        app.getHomePage().selectCreditSubMenu(string);
+        try {
+            app.getHomePage().selectCreditSubMenu(string);
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при выборе подраздела кредита");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Step("проверка что страница c кредитами открылась")
     @Допустим("проверить что страница c кредитами открылась")
     public void проверить_что_страница_c_кредитами_открылась() {
-        app.getCreditPage().checkOpenCreditPage();
+        try {
+            app.getCreditPage().checkOpenCreditPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при проверке страницы с кредитами");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Step("открытие страницы с кредитами")
     @Допустим("открыта страница с кредитами")
     public void открыта_страница_с_кредитами() {
-        app.getCreditPage();
+        try {
+            app.getCreditPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при открытии страницы с кредитами");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Step("выполнение прокрутки")
     @Допустим("выполнена прокрутка до калькулятора кредита")
     public void выполнена_прокрутка_до_калькулятора_кредита() {
-        app.getCreditPage().scrollToCreditCalc();
+        try {
+            app.getCreditPage().scrollToCreditCalc();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при прокрутке до калькулятора кредита");
+            attachPageSource();
+            throw e;
+        }
     }
-
 
     @Допустим("выполнена прокрутка до баннера карьеры")
     public void выполнена_прокрутка_до_баннера_карьеры() {
-        app.getHomePage().scrollToCareer();
+        try {
+            app.getHomePage().scrollToCareer();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при прокрутке до баннера карьеры");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("была нажата карточка с карьерой")
     public void была_нажата_карточка_с_карьерой() {
-        app.getHomePage().scrollToCareer().selectCareerPage();
+        try {
+            app.getHomePage().scrollToCareer().selectCareerPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при нажатии на карточку карьеры");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("проверить что страница карьеры открылась")
     public void проверить_что_страница_карьеры_открылась() {
-        app.getCareerPage().checkOpenCareerPage();
+        try {
+            app.getCareerPage().checkOpenCareerPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при проверке страницы карьеры");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("выполнена прокрутка до баннера карьеры в IT")
     public void выполнена_прокрутка_до_баннера_карьеры_в_IT() {
-        app.getCareerPage().scrollToIt();
+        try {
+            app.getCareerPage().scrollToIt();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при прокрутке до баннера карьеры в IT");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("была нажата карточка с карьерой в IT")
     public void была_нажата_карточка_с_карьерой_в_IT() {
-        app.getCareerPage().scrollToIt().selectItPage();
+        try {
+            app.getCareerPage().scrollToIt().selectItPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при нажатии на карточку карьеры в IT");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("проверить что страница карьеры в IT открылась")
     public void проверить_что_страница_карьеры_в_IT_открылась() {
-        app.getItPage().checkOpenItPage();
+        try {
+            app.getItPage().checkOpenItPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при проверке страницы карьеры в IT");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("выбран подраздел карт {string}")
     public void выбран_подраздел_карт(String string) {
-        app.getHomePage().selectCardsSubMenu(string);
+        try {
+            app.getHomePage().selectCardsSubMenu(string);
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при выборе подраздела карт");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("проверить что страница c картами открылась")
     public void проверить_что_страница_c_картами_открылась() {
-        app.getCardsPage().checkOpenCardsPage();
+        try {
+            app.getCardsPage().checkOpenCardsPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при проверке страницы с картами");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("открыта страница с картами")
     public void открыта_страница_с_картами() {
-        app.getCardsPage();
+        try {
+            app.getCardsPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при открытии страницы с картами");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("выбрана страница с картой Яркая")
     public void выбрана_страница_с_картой_яркая() {
-        app.getCardsPage().selectyarkayaCardPage();
+        try {
+            app.getCardsPage().selectyarkayaCardPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при выборе страницы карты Яркая");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("проверить что страница c картой Яркая открылась")
     public void проверить_что_страница_c_картой_яркая_открылась() {
-        app.getYarkayaCardPage().checkOpenYarkayaPage();
+        try {
+            app.getYarkayaCardPage().checkOpenYarkayaPage();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при проверке страницы карты Яркая");
+            attachPageSource();
+            throw e;
+        }
     }
 
     @Допустим("выполнена прокрутка до полей для заполнения")
     public void выполнена_прокрутка_до_полей_для_заполнения() {
-        app.getYarkayaCardPage().scrollToElement();
+        try {
+            app.getYarkayaCardPage().scrollToElement();
+            attachPageSource();
+        } catch (AssertionError e) {
+            attachScreenshot("Ошибка при прокрутке до полей для заполнения");
+            attachPageSource();
+            throw e;
+        }
     }
 
-
-    @Attachment(value = "Screenshot", type = "image/png")
-    private void attachScreenshot(String name) {
-        byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-        Allure.addAttachment(name, new ByteArrayInputStream(screenshot));
-    }
 
     @Тогда("дочерний элемент баннера содержит текст {string}")
     public void дочернийЭлементБаннераСодержитТекст(String expectedText) {

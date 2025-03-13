@@ -90,8 +90,6 @@
         </dependency>
 
 
-
-
     </dependencies>
 <build>
     <plugins>
@@ -114,13 +112,16 @@
             <version>3.3.1</version>
             <configuration>
                 <testFailureIgnore>true</testFailureIgnore>
-                <includes>**/TestRunner.java</includes>
+                <includes>
+                    **/TestRunner.java
+                </includes>
                 <argLine>
                     -Xmx1024m
                     -Dfile.encoding=${encoding.type}
-                    -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar"
                 </argLine>
                 <systemPropertyVariables>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                     <allure.results.directory>${project.build.directory}/reports/allure-results</allure.results.directory>
                     <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
                 </systemPropertyVariables>
