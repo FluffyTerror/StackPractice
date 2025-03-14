@@ -1,8 +1,8 @@
 package org.FluffyTerror.Cucumber.Hooks;
 
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.Before;
+import io.cucumber.java.*;
 import org.FluffyTerror.managers.InitManager;
+
 
 public class Hooks {
 
@@ -14,7 +14,9 @@ public class Hooks {
 
     @AfterAll
     public static void tearDownDriver() {
+        System.out.println("Закрываем веб-драйвер после всех тестов...");
         InitManager.quitFramework();
     }
+
 
 }

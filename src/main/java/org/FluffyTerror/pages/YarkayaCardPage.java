@@ -57,14 +57,13 @@ public class YarkayaCardPage extends BasePage {
     public YarkayaCardPage fillPatronym(String name) {
         fillInputField(patronym, name);
         return this;
-        //  sleep(500);//чисто для того чтобы посмотрели как все заполнено
     }
 
     public void checkInputFields() {
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(lastName.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
-                    .isEqualTo("Ива");
+                    .isEqualTo("Иванович");
             softAssertions.assertThat(firstName.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
                     .isEqualTo("Иван");

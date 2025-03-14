@@ -2,6 +2,7 @@ package org.FluffyTerror.BaseTest;
 
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import org.FluffyTerror.managers.DriverManager;
 import org.FluffyTerror.managers.InitManager;
 import org.FluffyTerror.managers.PageManager;
@@ -43,8 +44,14 @@ public class BaseTest {
     }
 
     public void attachPageSource() {
-        String currentUrl = driverManager.getDriver().getCurrentUrl();
-        Allure.attachment("Ссылка", currentUrl);
+        String currentUrl = driverManager.getDriver().getPageSource();
+        Allure.attachment("HTML", currentUrl);
+        attachPageLink();
+    }
+
+
+    public void attachPageLink() {
+        Allure.attachment("URL", driverManager.getDriver().getCurrentUrl());
     }
 
 

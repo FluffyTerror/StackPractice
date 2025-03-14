@@ -1,11 +1,13 @@
 package org.FluffyTerror.pages;
 
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -33,6 +35,19 @@ public class HomePage extends BasePage {
 
     @FindBy(css = "a.chakra-link.css-vg2g2m a[href='/career']")
     private WebElement career;
+
+    //
+    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Программа «Квартира»')]")
+    private WebElement mortgageCard;
+
+    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Карта Серебряный возраст')]")
+    private WebElement silverAgeCard;
+
+    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Программа лояльности ЯРКО')]")
+    private WebElement loyaltyCard;
+
+    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Пенсионное обслуживание')]")
+    private WebElement pensionerCard;
 
     /**
      * Элемент, отображающий значение ежемесячного платежа по ипотеке.
@@ -179,6 +194,10 @@ public class HomePage extends BasePage {
         return (HomePage) scrollToElement(mortgageButton);
     }
 
+    public HomePage scrollToRecommended() {
+        return (HomePage) scrollToElement(mortgageCard);
+    }
+
     /**
      * Кликает по элементу вкладки ипотеки.
      *
@@ -206,7 +225,7 @@ public class HomePage extends BasePage {
     }
 
     public void checkCareerIsDisplayed() {
-        Predicate<WebElement> predicate = element -> element.isDisplayed();
+        Predicate<WebElement> predicate = WebElement::isDisplayed;
         checkParam(career, predicate);
     }
 
@@ -220,5 +239,30 @@ public class HomePage extends BasePage {
         checkParam(careerFirstText, predicate);
 
 
+    }
+
+    public void checkRecommendedIsDisplayed() {
+        SoftAssertions softly = new SoftAssertions();
+
+        Map<WebElement, String> elementsMap = Map.of(
+                mortgageCard, "Программа «Квартира»",
+                silverAgeCard, "Карта Серебряный возраст",
+                loyaltyCard, "Программа лояльности ЯРКО",
+                pensionerCard, "Пенсионное обслуживание"
+        );
+        for (Map.Entry<WebElement, String> entry : elementsMap.entrySet()) {
+            WebElement element = entry.getKey();
+            String expectedText = entry.getValue();
+
+            softly.assertThat(element.isDisplayed())
+                    .as("Баннер не находится в поле видимости/не отображается!")
+                    .isTrue();
+
+            String actualText = element.getText();
+            softly.assertThat(actualText)
+                    .as("Баннер не содержит необходимую информацию!")
+                    .isEqualTo(expectedText);
+        }
+        softly.assertAll();
     }
 }
