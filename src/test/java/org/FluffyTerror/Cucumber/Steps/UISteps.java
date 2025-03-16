@@ -4,7 +4,6 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
-
 import io.qameta.allure.Step;
 import org.FluffyTerror.BaseTest.BaseTest;
 import org.FluffyTerror.managers.DriverManager;
@@ -45,18 +44,32 @@ public class UISteps extends BaseTest {
         }
     }
 
-    @Step("Выбор подраздела вклада {subMenu}")
-    @Допустим("пользователь выбирает подраздел вклада {string}")
+    @Step("Выбор подраздела {subMenu}")
+    @Допустим("пользователь выбирает подраздел {string}")
     public void выбран_подраздел(String subMenu) {
         try {
-            app.getHomePage().selectDepositSubMenu(subMenu);
-            attachPageSource();
+            switch (subMenu) {
+                case ("Все вклады"):
+                    app.getHomePage().selectDepositSubMenu(subMenu);
+                    attachPageSource();
+                    break;
+                case ("Дебетовые карты"):
+                    app.getHomePage().selectCardsSubMenu(subMenu);
+                    attachPageSource();
+                    break;
+                case ("Кредит наличными"):
+                    app.getHomePage().selectCreditSubMenu(subMenu);
+                    attachPageSource();
+                    break;
+                default:
+                    throw new AssertionError("Не существующее подраздела");
+            }
+
         } catch (Exception e) {
-            attachScreenshot("Ошибка при выборе подраздела вклада");
+            attachScreenshot("Ошибка при выборе подраздела");
             attachPageSource();
             throw e;
         }
-
     }
 
     @Step("Проверка, что страница вкладов открылась")
@@ -98,40 +111,26 @@ public class UISteps extends BaseTest {
         }
     }
 
-    @Step("Заполнение поля фамилии: {lastName}")
-    @Допустим("поле фамилии заполнено {string}")
-    public void поле_фамилии_заполнено(String lastName) {
+    @Step("Заполнение поля {fieldType}: {value}")
+    @Допустим("поле {string} заполнено {string}")
+    public void заполнить_поле(String fieldType, String value) {
         try {
-            app.getYarkayaCardPage().fillLastName(lastName);
+            switch (fieldType.toLowerCase()) {
+                case "фамилия":
+                    app.getYarkayaCardPage().fillLastName(value);
+                    break;
+                case "имя":
+                    app.getYarkayaCardPage().fillName(value);
+                    break;
+                case "отчество":
+                    app.getYarkayaCardPage().fillPatronym(value);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Неизвестное поле: " + fieldType);
+            }
             attachPageSource();
         } catch (Exception e) {
-            attachScreenshot("Ошибка при заполнении фамилии");
-            attachPageSource();
-            throw e;
-        }
-    }
-
-    @Step("Заполнение поля имени: {firstName}")
-    @Допустим("поле имя заполнено {string}")
-    public void поле_имя_заполнено(String firstName) {
-        try {
-            app.getYarkayaCardPage().fillName(firstName);
-            attachPageSource();
-        } catch (Exception e) {
-            attachScreenshot("Ошибка при заполнении имени");
-            attachPageSource();
-            throw e;
-        }
-    }
-
-    @Step("Заполнение поля отчества: {patronymic}")
-    @Допустим("поле отчества заполнено {string}")
-    public void поле_отчества_заполнено(String patronymic) {
-        try {
-            app.getYarkayaCardPage().fillPatronym(patronymic);
-            attachPageSource();
-        } catch (Exception e) {
-            attachScreenshot("Ошибка при заполнении отчества");
+            attachScreenshot("Ошибка при заполнении поля: " + fieldType);
             attachPageSource();
             throw e;
         }
@@ -166,19 +165,6 @@ public class UISteps extends BaseTest {
             throw e;
         }
 
-    }
-
-    @Step("выбран подраздел кредита")
-    @Допустим("пользователь выбрал подраздел кредита {string}")
-    public void выбран_подраздел_кредита(String string) {
-        try {
-            app.getHomePage().selectCreditSubMenu(string);
-            attachPageSource();
-        } catch (Exception e) {
-            attachScreenshot("Ошибка при выборе подраздела кредита");
-            attachPageSource();
-            throw e;
-        }
     }
 
     @Step("проверка что страница c кредитами открылась")
@@ -292,17 +278,6 @@ public class UISteps extends BaseTest {
         }
     }
 
-    @Допустим("выбран подраздел карт {string}")
-    public void выбран_подраздел_карт(String string) {
-        try {
-            app.getHomePage().selectCardsSubMenu(string);
-            attachPageSource();
-        } catch (Exception e) {
-            attachScreenshot("Ошибка при выборе подраздела карт");
-            attachPageSource();
-            throw e;
-        }
-    }
 
     @Допустим("страница c картами открыта")
     public void проверить_что_страница_c_картами_открылась() {
