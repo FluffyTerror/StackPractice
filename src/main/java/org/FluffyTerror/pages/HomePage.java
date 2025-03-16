@@ -175,28 +175,22 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    /**
-     * Прокручивает страницу до элемента карьеры.
-     *
-     * @return текущий экземпляр HomePage для цепочки вызовов
-     */
-    public HomePage scrollToCareer() {
-        return (HomePage) scrollToElement(career);
+
+    public HomePage scrollToElement(String element){
+        switch (element){
+            case("Карьера"):
+                return (HomePage) scrollToElement(career);
+            case ("Ипотека"):
+                mortgageButton.isDisplayed();
+                return (HomePage) scrollToElement(mortgageButton);
+            case ("Рекомендуемое"):
+                scrollToElement(mortgageCard);
+                break;
+        }
+        return this;
     }
 
-    /**
-     * Прокручивает страницу до вкладки ипотеки.
-     *
-     * @return текущий экземпляр HomePage для цепочки вызовов
-     */
-    public HomePage scrollToMortgage() {
-        mortgageButton.isDisplayed();
-        return (HomePage) scrollToElement(mortgageButton);
-    }
 
-    public HomePage scrollToRecommended() {
-        return (HomePage) scrollToElement(mortgageCard);
-    }
 
     /**
      * Кликает по элементу вкладки ипотеки.

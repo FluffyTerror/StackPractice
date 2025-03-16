@@ -209,7 +209,7 @@ public class UISteps extends BaseTest {
     @Допустим("пользователь прокручивает страницу до баннера карьеры")
     public void выполнена_прокрутка_до_баннера_карьеры() {
         try {
-            app.getHomePage().scrollToCareer();
+            app.getHomePage().scrollToElement("Карьера");
             attachPageSource();
         } catch (Exception e) {
             attachScreenshot("Ошибка при прокрутке до баннера карьеры");
@@ -221,7 +221,7 @@ public class UISteps extends BaseTest {
     @Допустим("пользователь нажимает на карточку с карьерой")
     public void была_нажата_карточка_с_карьерой() {
         try {
-            app.getHomePage().scrollToCareer().selectCareerPage();
+            app.getHomePage().scrollToElement("Карьера").selectCareerPage();
             attachPageSource();
         } catch (Exception e) {
             attachScreenshot("Ошибка при нажатии на карточку карьеры");
@@ -342,13 +342,13 @@ public class UISteps extends BaseTest {
 
     @Тогда("дочерний элемент баннера содержит текст {string}")
     public void дочернийЭлементБаннераСодержитТекст(String expectedText) {
-        app.getHomePage().scrollToCareer().checkChildCareer(expectedText);
+        app.getHomePage().scrollToElement("Карьера").checkChildCareer(expectedText);
     }
 
     @Тогда("баннер отображен")
     public void баннерОтображен() {
         app.getHomePage()
-                .scrollToCareer()
+                .scrollToElement("Карьера")
                 .checkCareerIsDisplayed();
     }
 
@@ -379,7 +379,7 @@ public class UISteps extends BaseTest {
     @Когда("пользователь прокручивает страницу до карточек с рекомендуемыми продуктами")
     public void пользовательПрокручиваетСтраницуДоКарточекСРекомендуемымиПродуктами() {
         try {
-            app.getHomePage().scrollToRecommended();
+            app.getHomePage().scrollToElement("Рекомендуемое");
             attachPageSource();
         } catch (Exception e) {
             attachPageSource();
@@ -390,7 +390,6 @@ public class UISteps extends BaseTest {
 
     @Тогда("все карточки отображены")
     public void всеКарточкиОтображены() {
-
         try {
             app.getHomePage().checkRecommendedIsDisplayed();
             attachPageSource();
@@ -399,6 +398,5 @@ public class UISteps extends BaseTest {
             attachScreenshot("ошибка отображения баннеров");
             throw new RuntimeException(e);
         }
-
     }
 }

@@ -15,7 +15,7 @@ public class CreditPage extends BasePage {
     private WebElement consumer;
 
     @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Сумма кредита')]/following-sibling::input[@type='text'] ")
-//
+
     private WebElement creditSum;
 
     @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Срок кредита')]/following-sibling::input[@type='text']")

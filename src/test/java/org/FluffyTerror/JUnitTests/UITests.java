@@ -9,7 +9,7 @@ public class UITests extends BaseTest {
     @Tag("UI")
     public void testCareer() {
         app.getHomePage()
-                .scrollToCareer()
+                .scrollToElement("Карьера")
                 .selectCareerPage()
                 .checkOpenCareerPage()
                 .scrollToIt()
@@ -110,7 +110,7 @@ public class UITests extends BaseTest {
     @Tag("UI")
     public void testMortgage() {
         app.getHomePage()
-                .scrollToMortgage()
+                .scrollToElement("Ипотека")
                 .clickMortgage()
                 .fillSum(9000000)
                 .fillDuration(120)
@@ -118,17 +118,18 @@ public class UITests extends BaseTest {
                 .checkMortgageValue("28 719");
 
     }
+
     @Test
     public void testFunc(){
         app.getHomePage()
-                .scrollToCareer()
+                .scrollToElement("Карьера")
                 .checkCareerIsDisplayed();
     }
 
     @Test
     public void testFunc2(){
         app.getHomePage()
-                .scrollToCareer()
+                .scrollToElement("Карьера")
                 .checkChildCareer("Карьера в БСПБ - ");
     }
 }
