@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.lang.reflect.Field;
 import java.time.Duration;
 
 public class BasePage {
@@ -69,33 +70,26 @@ public class BasePage {
     /**
      * Общий метод для заполнения строковых значений для полей ввода
      *
-     * @param field - веб-элемент поле ввода
-     * @param value - значение вводимое в поле
+     * @param pageObject класс странички в которой заполняем поля
+     * @param value значение вводимое в поле
+     * @param fieldName имя поля для ввода
      */
-
-    protected void fillInputField(WebElement field, String value) {
-        waitUtilElementToBeClickable(field).click();
-        field.sendKeys(value);
-    }
-
-    /**
-     * Общий метод для заполнения числовых значений для полей ввода
-     *
-     * @param field - веб-элемент поле ввода
-     * @param value - значение вводимое в поле
-     */
-    protected void fillIntInputField(WebElement field, Integer value) {
-        WebElement element = waitUtilElementToBeClickable(field);
-        element.click();
-        element.clear();
-        element.sendKeys(String.valueOf(value));
+    public void fillInputField(Object pageObject, String fieldName, String value) {
+        try {
+            Field field = pageObject.getClass().getDeclaredField(fieldName); // Ищем поле по имени в переданном классе
+            field.setAccessible(true); // Делаем его доступным
+            WebElement element = (WebElement) field.get(pageObject); // Получаем WebElement
+            element.clear();
+            element.sendKeys(value);// Вводим текст
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException("Ошибка при заполнении поля: " + fieldName, e);
+        }
     }
 
     /**
      * Функция для ожидания
      * @param millis целевой элемент
      */
-
     public void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -122,6 +116,5 @@ public class BasePage {
         element.isEnabled();
         return this;
     }
-
 
 }

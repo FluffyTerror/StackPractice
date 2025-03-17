@@ -1,6 +1,5 @@
 package org.FluffyTerror.pages;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -15,7 +14,6 @@ public class CreditPage extends BasePage {
     private WebElement consumer;
 
     @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Сумма кредита')]/following-sibling::input[@type='text'] ")
-
     private WebElement creditSum;
 
     @FindBy(xpath = "//div[@class='css-pxyno3']//p[contains(text(), 'Срок кредита')]/following-sibling::input[@type='text']")
@@ -28,7 +26,7 @@ public class CreditPage extends BasePage {
     private WebElement bankPensionCheckbox;
 
     @FindBy(css = "h2.css-1bw6t7s")
-    private WebElement monthlyPayment;
+    public static WebElement monthlyPayment;
 
 
     public void checkOpenCreditPage() {
@@ -42,46 +40,29 @@ public class CreditPage extends BasePage {
     }
 
 
-    public CreditPage scrollToCreditCalc() {
+    public void scrollToCreditCalc() {
         sleep(200);
-        return (CreditPage) scrollToElement(creditSum);
+        scrollToElement(creditSum);
     }
 
-    public CreditPage fillSum(Integer sum) {
 
-        waitUtilElementToBeVisible(creditSum);
-        ((JavascriptExecutor) driverManager.getDriver()).executeScript("arguments[0].value='';", creditSum);
-        fillIntInputField(creditSum, sum);
-        return this;
-    }
-
-    public CreditPage fillDuration(Integer duration) {
-        waitUtilElementToBeVisible(creditDuration);
-        if (duration < 13) {
-            duration = 13;
-        }
-        fillIntInputField(creditDuration, duration);
-        return this;
-
-    }
-
-    /**
-     * Ставит чекбокс "получаю зп в банке" в состояние активен
-     */
-    public CreditPage bankSalary() {
-        waitUtilElementToBeVisible(bankSalaryCheckbox);
-        waitUtilElementToBeClickable(bankSalaryCheckbox).click();
-        return this;
-    }
-
-    public CreditPage bankPension() {
-        waitUtilElementToBeVisible(bankPensionCheckbox);
-        waitUtilElementToBeClickable(bankPensionCheckbox).click();
-        return this;
-    }
+//    /**
+//     * Ставит чекбокс "получаю зп в банке" в состояние активен
+//     */
+//    public CreditPage bankSalary() {
+//        waitUtilElementToBeVisible(bankSalaryCheckbox);
+//        waitUtilElementToBeClickable(bankSalaryCheckbox).click();
+//        return this;
+//    }
+//
+//    public CreditPage bankPension() {
+//        waitUtilElementToBeVisible(bankPensionCheckbox);
+//        waitUtilElementToBeClickable(bankPensionCheckbox).click();
+//        return this;
+//    }
 
     public void checkCreditCalc(String sum) {
-        sleep(350);//число не успевает прогрузиться
+        sleep(1000);//число не успевает прогрузиться
         waitUtilElementToBeVisible(monthlyPayment);
         String value = monthlyPayment.getText();
         assertThat(value)

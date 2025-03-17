@@ -8,66 +8,73 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class YarkayaCardPage extends BasePage {
     @FindBy(css = "h1.css-uyawat")
-    private WebElement yarkayaTitle;
+    public static WebElement yarkayaTitle;
 
     @FindBy(css = "input[name=\"lastName\"]")
-    private WebElement lastName;
+    public static WebElement lastNameInput;
 
     @FindBy(css = "input[name=\"firstName\"]")
-    private WebElement firstName;
+    public static WebElement firstNameInput;
 
     @FindBy(css = "input[name=\"patronym\"]")
-    private WebElement patronym;
+    public static WebElement patronymInput;
 
+    public WebElement getYarkayaTitle() {
+        return yarkayaTitle;
+    }
 
-    public YarkayaCardPage checkOpenYarkayaPage() {
+    public void setYarkayaTitle(WebElement yarkayaTitle) {
+        this.yarkayaTitle = yarkayaTitle;
+    }
+
+    public WebElement getLastNameInput() {
+        return lastNameInput;
+    }
+
+    public void setLastNameInput(WebElement lastNameInput) {
+        this.lastNameInput = lastNameInput;
+    }
+
+    public WebElement getFirstNameInput() {
+        return firstNameInput;
+    }
+
+    public void setFirstNameInput(WebElement firstNameInput) {
+        this.firstNameInput = firstNameInput;
+    }
+
+    public WebElement getPatronymInput() {
+        return patronymInput;
+    }
+
+    public void setPatronymInput(WebElement patronymInput) {
+        this.patronymInput = patronymInput;
+    }
+
+    public void checkOpenYarkayaPage() {
         waitUtilElementToBeVisible(yarkayaTitle);
         String title = yarkayaTitle.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Карта «Яркая»");
-        return this;
     }
 
 
-    public YarkayaCardPage scrollToElement() {
-        return (YarkayaCardPage) scrollToElement(lastName);
+
+    public void scrollToElement() {
+        scrollToElement(lastNameInput);
     }
 
-    /**
-     * Заполняет поле фамилии
-     */
-    public YarkayaCardPage fillLastName(String name) {
-        fillInputField(lastName, name);
-        return this;
-    }
-
-    /**
-     * Заполняет поле имени
-     */
-
-    public YarkayaCardPage fillName(String name) {
-        fillInputField(firstName, name);
-        return this;
-    }
-
-    /**
-     * Заполняет поле отчества
-     */
-    public YarkayaCardPage fillPatronym(String name) {
-        fillInputField(patronym, name);
-        return this;
-    }
 
     public void checkInputFields() {
         SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(lastName.getAttribute("value"))
+            softAssertions.assertThat(lastNameInput.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
                     .isEqualTo("Иванович");
-            softAssertions.assertThat(firstName.getAttribute("value"))
+            softAssertions.assertThat(firstNameInput.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
                     .isEqualTo("Иван");
-            softAssertions.assertThat(patronym.getAttribute("value"))
+            softAssertions.assertThat(patronymInput.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
                     .isEqualTo("Иванов");
         });

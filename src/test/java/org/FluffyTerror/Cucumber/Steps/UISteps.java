@@ -1,22 +1,22 @@
 package org.FluffyTerror.Cucumber.Steps;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
 import org.FluffyTerror.BaseTest.BaseTest;
 import org.FluffyTerror.managers.DriverManager;
-import org.FluffyTerror.pages.YarkayaCardPage;
+import org.FluffyTerror.pages.BasePage;
+import org.FluffyTerror.pages.CreditPage;
 import org.openqa.selenium.WebDriver;
 
-import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class UISteps extends BaseTest {
 
     private final WebDriver driver = DriverManager.getDriverManager().getDriver();
+
+    private BasePage currentPageInstance; // Храним текущий экземпляр страницы
 
     @Step("Открытие страницы по адресу: {string}")
     @Допустим("открыта страница по адресу {string}")
@@ -51,20 +51,17 @@ public class UISteps extends BaseTest {
             switch (subMenu) {
                 case ("Все вклады"):
                     app.getHomePage().selectDepositSubMenu(subMenu);
-                    attachPageSource();
                     break;
                 case ("Дебетовые карты"):
                     app.getHomePage().selectCardsSubMenu(subMenu);
-                    attachPageSource();
                     break;
                 case ("Кредит наличными"):
                     app.getHomePage().selectCreditSubMenu(subMenu);
-                    attachPageSource();
                     break;
                 default:
-                    throw new AssertionError("Не существующее подраздела");
+                    throw new AssertionError("Не существующего подраздела");
             }
-
+            attachPageSource();
         } catch (Exception e) {
             attachScreenshot("Ошибка при выборе подраздела");
             attachPageSource();
@@ -111,31 +108,6 @@ public class UISteps extends BaseTest {
         }
     }
 
-    @Step("Заполнение поля {fieldType}: {value}")
-    @Допустим("поле {string} заполнено {string}")
-    public void заполнить_поле(String fieldType, String value) {
-        try {
-            switch (fieldType.toLowerCase()) {
-                case "фамилия":
-                    app.getYarkayaCardPage().fillLastName(value);
-                    break;
-                case "имя":
-                    app.getYarkayaCardPage().fillName(value);
-                    break;
-                case "отчество":
-                    app.getYarkayaCardPage().fillPatronym(value);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Неизвестное поле: " + fieldType);
-            }
-            attachPageSource();
-        } catch (Exception e) {
-            attachScreenshot("Ошибка при заполнении поля: " + fieldType);
-            attachPageSource();
-            throw e;
-        }
-    }
-
     @Step("Проверка значений в полях")
     @Допустим("значения в полях валидны")
     public void проверить_значения_в_полях() {
@@ -149,23 +121,23 @@ public class UISteps extends BaseTest {
         }
     }
 
-    @Step("Заполнение суммы кредита: {sum}, длительность: {duration}, проверка суммы: {expectedTotal}")
-    @Допустим("поле суммы заполнено числом {int} и поле длительности заполнено {int} и общая сумма кредита {string}")
-    public void поле_суммы_заполнено_числом(Integer sum, Integer duration, String expectedTotal) {
+
+    @Step("ежемесячный платеж по кредиту: {expectedTotal}")
+    @Допустим("ежемесячный платеж по кредиту {string}")
+    public void поле_суммы_заполнено_числом(String expectedTotal) {
         try {
-            app.getCreditPage()
-                    .scrollToCreditCalc()
-                    .fillSum(sum)
-                    .fillDuration(duration)
-                    .checkCreditCalc(expectedTotal);
+            if (currentPageInstance == null) {
+                throw new IllegalStateException("Страница не была инициализирована. Сначала вызови шаг для заполнения полей!");
+            }
+            ((CreditPage) currentPageInstance).checkCreditCalc(expectedTotal); // Используем сохраненный объект страницы из шага с заполнением полей
             attachPageSource();
         } catch (Exception e) {
-            attachScreenshot("Ошибка при заполнении полей кредита");
+            attachScreenshot("Ошибка при проверке полей кредита");
             attachPageSource();
             throw e;
         }
-
     }
+
 
     @Step("проверка что страница c кредитами открылась")
     @Допустим("страница c кредитами открыта")
@@ -352,27 +324,20 @@ public class UISteps extends BaseTest {
                 .checkCareerIsDisplayed();
     }
 
-    @Когда("заполняет поля значениями")
-    public void заполняетПоляЗначениями(DataTable table) {
-        YarkayaCardPage input = app.getCardsPage()
-                .selectyarkayaCardPage()
-                .scrollToElement();
 
-        Map<String, Consumer<String>> fieldActions = Map.of(
-                "Фамилия", input::fillLastName,
-                "Имя", input::fillName,
-                "Отчество", input::fillPatronym
-        );
+    @Когда("заполняет поля значениями {string}")
+    public void заполняетПоляЗначениями(String pageClassName, Map<String, String> data) {
+        try {
+            Class<?> pageClass = Class.forName("org.FluffyTerror.pages." + pageClassName);
+            currentPageInstance = (BasePage) pageClass.getDeclaredConstructor().newInstance(); // Сохраняем объект страницы
+            // чтобы не пришлось по новой перезагружать страницу и сбрасывать значения для проверок
 
-        List<Map<String, String>> data = table.asMaps(String.class, String.class);
+            data.forEach((field, value) -> currentPageInstance.fillInputField(currentPageInstance, field, value));
 
-        for (Map<String, String> row : data) {
-            String field = row.get("Поля");
-            String value = row.get("Значения");
-            fieldActions.getOrDefault(field, v -> {
-                throw new IllegalArgumentException("Неизвестное поле: " + field);
-            }).accept(value);
-
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Класс страницы не найден: " + pageClassName, e);
+        } catch (Exception e) {
+            throw new RuntimeException("Ошибка при создании экземпляра страницы", e);
         }
     }
 
@@ -399,4 +364,5 @@ public class UISteps extends BaseTest {
             throw new RuntimeException(e);
         }
     }
+
 }

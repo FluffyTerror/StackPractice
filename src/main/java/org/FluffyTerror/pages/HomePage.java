@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Map;
 import java.util.function.Predicate;
@@ -64,16 +63,14 @@ public class HomePage extends BasePage {
      * Кликает на базовое меню по его наименованию.
      *
      * @param nameBaseMenu наименование меню
-     * @return текущий экземпляр HomePage для цепочки вызовов
      */
-    public HomePage selectBaseMenu(String nameBaseMenu) {
+    public void selectBaseMenu(String nameBaseMenu) {
         String mainMenuXPath = String.format("//p[contains(text(),'%s')]", nameBaseMenu);
         WebElement mainMenu = driverManager.getDriver().findElement(By.xpath(mainMenuXPath));
 
         getActions().moveToElement(mainMenu).perform();
         waitUtilElementToBeVisible(mainMenu);
 
-        return this;
     }
 
     /**
@@ -82,23 +79,21 @@ public class HomePage extends BasePage {
      * @param nameSubMenu  наименование подменю
      * @param pageSupplier функциональный интерфейс для получения экземпляра нужной страницы
      * @param <T>          тип страницы, наследующий BasePage
-     * @return экземпляр страницы, полученной через Supplier
      */
-    public <T extends BasePage> T selectSubMenu(String nameSubMenu, Supplier<T> pageSupplier) {
+    public <T extends BasePage> void selectSubMenu(String nameSubMenu, Supplier<T> pageSupplier) {
         String submenuXPath = String.format("//a[contains(text(),'%s')]", nameSubMenu);
         WebElement subMenu = waitUtilElementToBeVisible(driverManager.getDriver().findElement(By.xpath(submenuXPath)));
         waitUtilElementToBeClickable(subMenu).click();
-        return pageSupplier.get();
+        pageSupplier.get();
     }
 
     /**
      * Выбирает под-меню для депозитов и переходит на страницу депозита.
      *
      * @param nameSubMenu наименование подменю
-     * @return экземпляр DepositPage
      */
-    public DepositPage selectDepositSubMenu(String nameSubMenu) {
-        return selectSubMenu(nameSubMenu, () -> pageManager.getDepositPage());
+    public void selectDepositSubMenu(String nameSubMenu) {
+        selectSubMenu(nameSubMenu, () -> pageManager.getDepositPage());
     }
 
 
@@ -106,20 +101,18 @@ public class HomePage extends BasePage {
      * Выбирает под-меню для карт и переходит на страницу карт.
      *
      * @param nameSubMenu наименование подменю
-     * @return экземпляр CardsPage
      */
-    public CardsPage selectCardsSubMenu(String nameSubMenu) {
-        return selectSubMenu(nameSubMenu, () -> pageManager.getCardsPage());
+    public void selectCardsSubMenu(String nameSubMenu) {
+        selectSubMenu(nameSubMenu, () -> pageManager.getCardsPage());
     }
 
     /**
      * Выбирает под-меню для кредита и переходит на страницу кредита.
      *
      * @param nameSubMenu наименование подменю
-     * @return экземпляр CreditPage
      */
-    public CreditPage selectCreditSubMenu(String nameSubMenu) {
-        return selectSubMenu(nameSubMenu, () -> pageManager.getCreditPage());
+    public void selectCreditSubMenu(String nameSubMenu) {
+        selectSubMenu(nameSubMenu, () -> pageManager.getCreditPage());
     }
 
     public void checkParam(WebElement element, Predicate<WebElement> predicate, String description) {
@@ -134,45 +127,10 @@ public class HomePage extends BasePage {
 
     /**
      * Переходит на страницу карьеры.
-     *
-     * @return экземпляр CareerPage
      */
-    public CareerPage selectCareerPage() {
+    public void selectCareerPage() {
         waitUtilElementToBeClickable(career).click();
-        return pageManager.getCareerPage();
-    }
-
-    /**
-     * Заполняет поле стоимости недвижимости и возвращает текущий экземпляр страницы.
-     *
-     * @param sum сумма для ввода
-     * @return текущий экземпляр HomePage для цепочки вызовов
-     */
-    public HomePage fillSum(Integer sum) {
-        fillIntInputField(inputEstateValue, sum);
-        return this;
-    }
-
-    /**
-     * Заполняет поле срока и возвращает текущий экземпляр страницы.
-     *
-     * @param duration срок для ввода
-     * @return текущий экземпляр HomePage для цепочки вызовов
-     */
-    public HomePage fillDuration(Integer duration) {
-        fillIntInputField(inputDurationValue, duration);
-        return this;
-    }
-
-    /**
-     * Заполняет поле первоначального взноса и возвращает текущий экземпляр страницы.
-     *
-     * @param sum сумма для ввода
-     * @return текущий экземпляр HomePage для цепочки вызовов
-     */
-    public HomePage fillInitialSum(Integer sum) {
-        fillIntInputField(inputInitialSumValue, sum);
-        return this;
+        pageManager.getCareerPage();
     }
 
 
@@ -192,31 +150,31 @@ public class HomePage extends BasePage {
 
 
 
-    /**
-     * Кликает по элементу вкладки ипотеки.
-     *
-     * @return текущий экземпляр HomePage для цепочки вызовов
-     */
-    public HomePage clickMortgage() {
-        mortgageButton.isDisplayed();
-        mortgageButton.isEnabled();
-        wait.until(ExpectedConditions.elementToBeClickable(mortgageButton)).click();
-        return this;
-    }
+//    /**
+//     * Кликает по элементу вкладки ипотеки.
+//     *
+//     * @return текущий экземпляр HomePage для цепочки вызовов
+//     */
+//    public HomePage clickMortgage() {
+//        mortgageButton.isDisplayed();
+//        mortgageButton.isEnabled();
+//        wait.until(ExpectedConditions.elementToBeClickable(mortgageButton)).click();
+//        return this;
+//    }
 
 
-    /**
-     * Проверяет, что отображаемое значение кредита соответствует ожидаемому.
-     *
-     * @param sum ожидаемая сумма кредита
-     */
-    public void checkMortgageValue(String sum) {
-        waitUtilElementToBeVisible(mortgageValue);
-        String value = mortgageValue.getText();
-        assertThat(value)
-                .as("Сумма кредита не соответствует ожидаемому!")
-                .isEqualTo(sum + " ₽");
-    }
+//    /**
+//     * Проверяет, что отображаемое значение кредита соответствует ожидаемому.
+//     *
+//     * @param sum ожидаемая сумма кредита
+//     */
+//    public void checkMortgageValue(String sum) {
+//        waitUtilElementToBeVisible(mortgageValue);
+//        String value = mortgageValue.getText();
+//        assertThat(value)
+//                .as("Сумма кредита не соответствует ожидаемому!")
+//                .isEqualTo(sum + " ₽");
+//    }
 
     public void checkCareerIsDisplayed() {
         Predicate<WebElement> predicate = WebElement::isDisplayed;
