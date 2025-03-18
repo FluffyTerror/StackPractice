@@ -18,7 +18,7 @@ public class InitManager {
      *
      * @see DriverManager#getDriverManager()
      */
-    private static final DriverManager driverManager = DriverManager.getDriverManager();
+    public static final DriverManager driverManager = DriverManager.getDriverManager();
 
     /**
      * Инициализация framework и запуск браузера со страницей приложения

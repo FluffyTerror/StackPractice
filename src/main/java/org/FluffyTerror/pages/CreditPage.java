@@ -61,9 +61,8 @@ public class CreditPage extends BasePage {
 //        return this;
 //    }
 
-    public void checkCreditCalc(String sum) {
-        sleep(1000);//число не успевает прогрузиться
-        waitUtilElementToBeVisible(monthlyPayment);
+    public static void checkCreditCalc(String sum) {
+        sleep(1000);
         String value = monthlyPayment.getText();
         assertThat(value)
                 .as("Сумма кредита не соответствует ожидаемому!")

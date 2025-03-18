@@ -53,7 +53,7 @@ public class BasePage {
      * @see org.openqa.selenium.support.ui.Wait
      * @see ExpectedConditions
      */
-    protected WebElement waitUtilElementToBeClickable(WebElement element) {
+    public WebElement waitUtilElementToBeClickable(WebElement element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -66,14 +66,12 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-
-
-
     /**
      * Функция для ожидания
+     *
      * @param millis целевой элемент
      */
-    public void sleep(long millis) {
+    public static void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (Exception e) {
