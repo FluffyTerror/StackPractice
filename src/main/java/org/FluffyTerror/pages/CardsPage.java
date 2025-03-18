@@ -22,9 +22,9 @@ public class CardsPage extends BasePage {
 
     }
 
-    public YarkayaCardPage selectyarkayaCardPage() {
+    public void selectYarkayaCardPage() {
         waitUtilElementToBeClickable(aboutYarkaya).click();
-        return pageManager.getYarkayaCardPage();
+        pageManager.getYarkayaCardPage();
     }
 
 }

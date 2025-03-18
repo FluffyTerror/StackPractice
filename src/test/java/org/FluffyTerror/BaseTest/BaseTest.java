@@ -18,7 +18,12 @@ import java.io.ByteArrayInputStream;
 import static org.FluffyTerror.utils.Const.BASE_URL;
 
 public class BaseTest {
-    protected PageManager app = PageManager.getPageManager();
+
+    public static PageManager getApp() {
+        return app;
+    }
+
+    public static PageManager app = PageManager.getPageManager();
 
     private final DriverManager driverManager = DriverManager.getDriverManager();
 

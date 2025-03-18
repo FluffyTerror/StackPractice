@@ -48,7 +48,7 @@ public class UITests extends BaseTest {
 ////    @Tag("UI")
 ////    public void testCards() {
 ////        app.getCardsPage()
-////                .selectyarkayaCardPage()
+////                .selectYarkayaCardPage()
 ////                .checkOpenYarkayaPage()
 ////                .scrollToElement()
 ////                .fillInputField("","Иванович")

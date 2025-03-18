@@ -5,18 +5,19 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
 import org.FluffyTerror.BaseTest.BaseTest;
+import org.FluffyTerror.enums.Tabs;
 import org.FluffyTerror.managers.DriverManager;
-import org.FluffyTerror.pages.BasePage;
-import org.FluffyTerror.pages.CreditPage;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.Map;
+
+import static org.FluffyTerror.utils.ObjectUtils.fillInputField;
+import static org.FluffyTerror.utils.ObjectUtils.getInputField;
 
 public class UISteps extends BaseTest {
 
     private final WebDriver driver = DriverManager.getDriverManager().getDriver();
-
-    private BasePage currentPageInstance; // Храним текущий экземпляр страницы
 
     @Step("Открытие страницы по адресу: {string}")
     @Допустим("открыта страница по адресу {string}")
@@ -67,6 +68,13 @@ public class UISteps extends BaseTest {
             attachPageSource();
             throw e;
         }
+    }
+
+    @Step("Выбор подраздела {subMenu}")
+    @Допустим("пользователь выбирает подраздел без switch {string}")
+    public void выбран_подраздел_без_switch(String subMenu) {
+        Tabs tab = Tabs.extractValue(subMenu);
+        tab.selectMenu();
     }
 
     @Step("Проверка, что страница вкладов открылась")
@@ -126,10 +134,7 @@ public class UISteps extends BaseTest {
     @Допустим("ежемесячный платеж по кредиту {string}")
     public void поле_суммы_заполнено_числом(String expectedTotal) {
         try {
-            if (currentPageInstance == null) {
-                throw new IllegalStateException("Страница не была инициализирована. Сначала вызови шаг для заполнения полей!");
-            }
-            ((CreditPage) currentPageInstance).checkCreditCalc(expectedTotal); // Используем сохраненный объект страницы из шага с заполнением полей
+            //app.getCreditPage().checkCreditCalc(expectedTotal); // Используем сохраненный объект страницы из шага с заполнением полей
             attachPageSource();
         } catch (Exception e) {
             attachScreenshot("Ошибка при проверке полей кредита");
@@ -278,7 +283,7 @@ public class UISteps extends BaseTest {
     @Допустим("выбрана страница с картой Яркая")
     public void выбрана_страница_с_картой_яркая() {
         try {
-            app.getCardsPage().selectyarkayaCardPage();
+            app.getCardsPage().selectYarkayaCardPage();
             attachPageSource();
         } catch (Exception e) {
             attachScreenshot("Ошибка при выборе страницы карты Яркая");
@@ -325,18 +330,17 @@ public class UISteps extends BaseTest {
     }
 
 
-    @Когда("заполняет поля значениями {string}")
+    @Когда("заполняет поля значениями для страницы {string}")
     public void заполняетПоляЗначениями(String pageClassName, Map<String, String> data) {
         try {
-            Class<?> pageClass = Class.forName("org.FluffyTerror.pages." + pageClassName);
-            currentPageInstance = (BasePage) pageClass.getDeclaredConstructor().newInstance(); // Сохраняем объект страницы
-            // чтобы не пришлось по новой перезагружать страницу и сбрасывать значения для проверок
-
-            data.forEach((field, value) -> currentPageInstance.fillInputField(currentPageInstance, field, value));
-
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Класс страницы не найден: " + pageClassName, e);
+            data.forEach((field, value) -> {
+                WebElement element = getInputField(pageClassName, field);//находим поле
+                fillInputField(element, value);//заполняем поле
+            });
+            attachPageSource();
         } catch (Exception e) {
+            attachPageSource();
+            attachScreenshot("ошибка при создании экземпляра страницы");
             throw new RuntimeException("Ошибка при создании экземпляра страницы", e);
         }
     }

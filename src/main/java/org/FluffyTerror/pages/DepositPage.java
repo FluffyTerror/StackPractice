@@ -16,22 +16,19 @@ public class DepositPage extends BasePage {
 
     /**
      * Проверяет, что страница "DepositPage" открыта, ожидая видимости заголовка.
-     *
-     * @return DepositPage - возвращает текущий объект DepositPage.
      */
 
-    public DepositPage checkOpenDepositPage() {
-        sleep(550);//страница не успевает прогрузиться
+    public void checkOpenDepositPage() {
+        sleep(1000);//страница не успевает прогрузиться
         waitUtilElementToBeVisible(depositTitle);
         assertThat(depositTitle.getText())
                 .as("Заголовок отсутствует/не соответствует требуемому")
                 .isEqualTo("Вклады и накопительные счета");
-        return this;
     }
 
-    public VesnaDepositPage selectVesnaDepositPage() {
+    public void selectVesnaDepositPage() {
         waitUtilElementToBeClickable(AboutVesna).click();
-        return pageManager.getVesnaDepositPage();
+        pageManager.getVesnaDepositPage();
     }
 
 
