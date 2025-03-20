@@ -13,6 +13,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 
 import static org.FluffyTerror.utils.Const.BASE_URL;
 
@@ -38,22 +39,18 @@ public class BaseTest {
         InitManager.quitFramework();
     }
 
-    public void attachScreenshot(String name) {
-        byte[] screenshot = ((TakesScreenshot) driverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
-        Allure.attachment(name, new ByteArrayInputStream(screenshot));
-    }
-
     public void attachPageSource() {
-        String currentUrl = driverManager.getDriver().getPageSource();
-        Allure.attachment("HTML", currentUrl);
+        String pageSource = driverManager.getDriver().getPageSource();
+        Allure.addAttachment("Page Source (HTML)", "text/html",
+                new ByteArrayInputStream(pageSource.getBytes(StandardCharsets.UTF_8)), ".html");
         attachPageLink();
     }
 
-
     public void attachPageLink() {
-        Allure.attachment("URL", driverManager.getDriver().getCurrentUrl());
+        String currentUrl = driverManager.getDriver().getCurrentUrl();
+        Allure.addAttachment("URL", "text/plain",
+                new ByteArrayInputStream(currentUrl.getBytes(StandardCharsets.UTF_8)), ".txt");
     }
-
 
 }
 
