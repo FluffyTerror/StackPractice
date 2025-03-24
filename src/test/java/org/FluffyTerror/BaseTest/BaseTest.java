@@ -9,8 +9,6 @@ import org.FluffyTerror.managers.PropsManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
