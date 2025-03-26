@@ -18,13 +18,6 @@ import static io.cucumber.core.options.Constants.*;
         @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm,pretty"),
 })
 
-//@RunWith(Cucumber.class)
-//@CucumberOptions(
-//        features = "src/test/resources/Features",
-//        glue = {"org.FluffyTerror.Cucumber.Steps, org.FluffyTerror.Cucumber.Hooks"},
-//        tags = "@UI",
-//        plugin = {"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm,pretty"}
-//)
 
 public class TestRunner {
     public static void tearDownAll() {

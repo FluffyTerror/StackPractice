@@ -35,7 +35,7 @@ public class CreditPage extends BasePage {
         String title = consumer.getText() + ' ' + credit.getText();
         assertThat(title)
                 .as("Заголовок отсутствует/не соответствует требуемому")
-                .isEqualTo("Потребительский кредит");
+                .isEqualTo("Потребительский кред");
 
     }
 

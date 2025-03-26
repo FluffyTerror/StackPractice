@@ -76,7 +76,7 @@ public class YarkayaCardPage extends BasePage {
                     .isEqualTo("Иван");
             softAssertions.assertThat(patronymInput.getAttribute("value"))
                     .as("Поле не содержит необходимой информации!")
-                    .isEqualTo("Иванов");
+                    .isEqualTo("Ивав");
         });
     }
 

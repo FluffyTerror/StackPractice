@@ -36,6 +36,7 @@ public class DriverManager {
      */
     private final PropsManager props = PropsManager.getPropsManager();
 
+    String videoFileName = System.getProperty("current.scenario.name","default_name") + ".mp4";
     /**
      * Конструктор объявлен как private (singleton паттерн)
      */
@@ -120,49 +121,7 @@ public class DriverManager {
         String browserVersion = System.getProperty("browser.version", "120.0");
 
         if (runMode.equalsIgnoreCase("remote")) {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("browserName", browserName);
-            capabilities.setCapability("browserVersion", browserVersion);
-
-            Map<String, Object> selenoidOptions = new HashMap<>();
-            selenoidOptions.put("enableVNC", true);
-            selenoidOptions.put("enableVideo", false);
-            capabilities.setCapability("selenoid:options", selenoidOptions);
-
-            try {
-                driver = new RemoteWebDriver(
-                        URI.create(props.getProperty(SELENOID_URL)).toURL(),
-                        capabilities
-                );
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            // Локальный запуск — использует готовую логику
-            if (OS.isFamilyWindows()) {
-                initLocalDriverForOsFamily(PATH_GECKO_DRIVER, PATH_CHROME_DRIVER, browserName);
-            } else if (OS.isFamilyUnix()) {
-                initLocalDriverForOsFamily(PATH_GECKO_DRIVER_UNIX, PATH_CHROME_DRIVER_UNIX, browserName);
-            } else {
-                throw new RuntimeException("Unsupported OS");
-            }
-        }
-    }
-    private void initRemoteDriver() {
-        String runMode = System.getProperty("run.mode", "local"); // "local" или "remote"
-        String browserName = System.getProperty("browser", "chrome");
-        String browserVersion = System.getProperty("browser.version", "120.0");
-
-        if (runMode.equalsIgnoreCase("remote")) {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("browserName", browserName);
-            capabilities.setCapability("browserVersion", browserVersion);
-
-            Map<String, Object> selenoidOptions = new HashMap<>();
-            selenoidOptions.put("enableVNC", true);
-            selenoidOptions.put("enableVideo", false);
-            capabilities.setCapability("selenoid:options", selenoidOptions);
-
+            DesiredCapabilities capabilities = getDesiredCapabilities(browserName, browserVersion);
             try {
                 driver = new RemoteWebDriver(
                         URI.create(props.getProperty(SELENOID_URL)).toURL(),
@@ -173,17 +132,31 @@ public class DriverManager {
             }
         } else {
             // Локальный запуск
-            switch (browserName.toLowerCase()) {
-                case "chrome":
-                    driver = new ChromeDriver();
-                    break;
-                case "firefox":
-                    driver = new FirefoxDriver();
-                    break;
-                default:
-                    throw new RuntimeException("Unsupported local browser: " + browserName);
+            if (OS.isFamilyWindows()) {
+                initLocalDriverForOsFamily(PATH_GECKO_DRIVER, PATH_CHROME_DRIVER, browserName);
+            } else if (OS.isFamilyUnix()) {
+                initLocalDriverForOsFamily(PATH_GECKO_DRIVER_UNIX, PATH_CHROME_DRIVER_UNIX, browserName);
+            } else {
+                throw new RuntimeException("Unsupported OS");
             }
         }
     }
+
+    private DesiredCapabilities getDesiredCapabilities(String browserName, String browserVersion) {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("browserName", browserName);
+        capabilities.setCapability("browserVersion", browserVersion);
+
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", true);
+
+        String videoFileName = System.getProperty("current.scenario.videoName");
+        selenoidOptions.put("videoName", videoFileName);
+
+        capabilities.setCapability("selenoid:options", selenoidOptions);
+        return capabilities;
+    }
+
 
 }
