@@ -6,6 +6,7 @@ pipeline {
         jdk 'jdk-21'         // Или твоя версия JDK, как настроено в Jenkins
     }
 
+
     stages {
         stage('Checkout') {
             steps {
