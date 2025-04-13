@@ -120,6 +120,7 @@
                     -Dfile.encoding=${encoding.type}
                     -Dcucumber.tags='@Check'
                 </argLine>
+                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                 <systemPropertyVariables>
                     <allure.results.directory>${project.build.directory}/reports/allure-results</allure.results.directory>
                     <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
