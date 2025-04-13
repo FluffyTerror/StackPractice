@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/FluffyTerror/StackPractice.git', branch: 'master' // Или другая ветка
+                git url: 'https://github.com/FluffyTerror/StackPractice.git', branch: 'master'
             }
         }
 
