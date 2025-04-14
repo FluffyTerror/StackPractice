@@ -36,16 +36,16 @@ public class HomePage extends BasePage {
     private WebElement career;
 
     //
-    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Программа «Квартира»')]")
+    @FindBy(xpath = "//h3[@class = 'css-bipdn9']/ span[contains(text(),'Программа «Квартира»')]")
     private WebElement mortgageCard;
 
-    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Карта Серебряный возраст')]")
+    @FindBy(xpath = "//h3[@class = 'css-bipdn9']/ span[contains(text(),'Карта Серебряный возраст')]")
     private WebElement silverAgeCard;
 
-    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Программа лояльности ЯРКО')]")
+    @FindBy(xpath = "//h3[@class = 'css-bipdn9']/ span[contains(text(),'Программа лояльности ЯРКО')]")
     private WebElement loyaltyCard;
 
-    @FindBy(xpath = "//a[@class = 'chakra-link css-31y7ng']/ span[contains(text(),'Пенсионное обслуживание')]")
+    @FindBy(xpath = "//h3[@class = 'css-bipdn9']/ span[contains(text(),'Пенсионное обслуживание')]")
     private WebElement pensionerCard;
 
     /**
